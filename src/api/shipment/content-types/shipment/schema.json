@@ -21,22 +21,22 @@
       "target": "api::order.order",
       "inversedBy": "shipments"
     },
-    "TrackingCode": {
+    "trackingCode": {
       "type": "string"
     },
     "shipment_status": {
       "type": "string"
     },
-    "Carrier": {
+    "carrier": {
       "type": "string"
     },
-    "ShippedDate": {
+    "shippedDate": {
       "type": "date"
     },
-    "EstimatedDeliveryDate": {
+    "estimatedDeliveryDate": {
       "type": "date"
     },
-    "ShippingCost": {
+    "shippingCost": {
       "type": "decimal"
     },
     "store": {
@@ -44,7 +44,7 @@
       "relation": "oneToOne",
       "target": "api::store.store"
     },
-    "TrackingLink": {
+    "trackingLink": {
       "type": "string"
     },
     "buyer": {

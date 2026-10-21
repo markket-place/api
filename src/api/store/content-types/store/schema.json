@@ -49,7 +49,7 @@
       "relation": "oneToMany",
       "target": "admin::user"
     },
-    "Description": {
+    "description": {
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -57,7 +57,7 @@
       },
       "type": "richtext"
     },
-    "Logo": {
+    "logo": {
       "type": "media",
       "multiple": false,
       "required": false,
@@ -73,7 +73,7 @@
         }
       }
     },
-    "Cover": {
+    "cover": {
       "type": "media",
       "multiple": false,
       "required": false,
@@ -86,7 +86,7 @@
         }
       }
     },
-    "Slides": {
+    "slides": {
       "type": "media",
       "multiple": true,
       "required": false,
@@ -112,7 +112,7 @@
       },
       "component": "common.address"
     },
-    "Favicon": {
+    "favicon": {
       "type": "media",
       "multiple": false,
       "required": false,
@@ -128,7 +128,7 @@
         }
       }
     },
-    "URLS": {
+    "urls": {
       "displayName": "URLS",
       "type": "component",
       "repeatable": true,
@@ -155,7 +155,7 @@
       },
       "type": "uid"
     },
-    "SEO": {
+    "seo": {
       "type": "component",
       "repeatable": false,
       "pluginOptions": {

@@ -17,13 +17,13 @@
       "relation": "oneToOne",
       "target": "api::store.store"
     },
-    "Amount": {
+    "amount": {
       "type": "decimal"
     },
-    "Currency": {
+    "currency": {
       "type": "string"
     },
-    "Status": {
+    "status": {
       "type": "enumeration",
       "enum": [
         "open",
@@ -40,7 +40,7 @@
     "STRIPE_PAYMENT_ID": {
       "type": "string"
     },
-    "Shipping_Address": {
+    "shippingAddress": {
       "type": "component",
       "repeatable": false,
       "component": "common.address"
@@ -66,7 +66,7 @@
       "type": "integer",
       "default": 0
     },
-    "Details": {
+    "details": {
       "displayName": "Product Snapshot",
       "type": "component",
       "repeatable": true,
@@ -81,7 +81,7 @@
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
     },
-    "Payment_attempts": {
+    "paymentAttempts": {
       "label": "Payment Attempts",
       "type": "component",
       "repeatable": true,

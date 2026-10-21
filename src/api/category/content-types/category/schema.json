@@ -28,7 +28,7 @@
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
     },
-    "Name": {
+    "name": {
       "type": "string",
       "required": true
     },
@@ -37,15 +37,15 @@
       "unique": false,
       "required": true
     },
-    "SEO": {
+    "seo": {
       "type": "component",
       "repeatable": false,
       "component": "common.seo"
     },
-    "Description": {
+    "description": {
       "type": "string"
     },
-    "Active": {
+    "active": {
       "type": "boolean",
       "default": true
     }

@@ -12,11 +12,11 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Name": {
+    "name": {
       "type": "string",
       "required": true
     },
-    "Message": {
+    "message": {
       "type": "text"
     },
     "email": {
@@ -34,7 +34,7 @@
       "target": "api::order.order",
       "inversedBy": "inboxMessages"
     },
-    "Archived": {
+    "archived": {
       "type": "boolean"
     },
     "parentMessageId": {
@@ -47,34 +47,34 @@
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
     },
-    "Direction": {
+    "direction": {
       "type": "string",
       "default": "incoming"
     },
-    "ThreadKey": {
+    "threadKey": {
       "type": "string"
     },
-    "RoutingKey": {
+    "routingKey": {
       "type": "string"
     },
-    "FromAddress": {
+    "fromAddress": {
       "type": "email"
     },
-    "ToAddress": {
+    "toAddress": {
       "type": "email"
     },
-    "MessageId": {
+    "messageId": {
       "type": "string"
     },
-    "BodyHtml": {
+    "bodyHtml": {
       "type": "text"
     },
-    "Metadata": {
+    "metadata": {
       "type": "component",
       "repeatable": false,
       "component": "common.inbox-metadata"
     },
-    "Estado": {
+    "estado": {
       "type": "string",
       "default": "new"
     }

@@ -12,35 +12,35 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Key": {
+    "key": {
       "type": "string",
       "required": true
     },
-    "Source": {
+    "source": {
       "type": "string",
       "required": false
     },
-    "Webhook": {
+    "webhook": {
       "type": "string",
       "required": false
     },
-    "EventType": {
+    "eventType": {
       "type": "string",
       "required": false
     },
-    "EventSubType": {
+    "eventSubType": {
       "type": "string",
       "required": false
     },
-    "RequestPath": {
+    "requestPath": {
       "type": "string",
       "required": false
     },
-    "ReceivedAt": {
+    "receivedAt": {
       "type": "datetime",
       "required": false
     },
-    "Content": {
+    "content": {
       "type": "json",
       "required": true
     },
