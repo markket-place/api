@@ -8,7 +8,7 @@
 - [ ] AI: open router decides which action is needed { key: action, } for api to proceed
 - [ ] api: stripe, restrict redirect domains
 
-## Aug 2026
+## Oct 2026
 
 
 - [ ] tienda: api: send posthog events to track milestone (users, content posted)
@@ -20,6 +20,7 @@
 - [ ] api: notify buyer of order change
 - [x] storefront: Order,Purchase sends an email to slug@markket.place
 - [ ] api: forward email to store owner / notify them, so they could reply directly from their inbox - iphone when ready
+- [ ] api: normalize attribute names in schemas
 
 ### v0.7.7
 - [x] common.prices schema supports stripe.price.recurring options
