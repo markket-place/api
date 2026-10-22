@@ -21,7 +21,7 @@ export const MEDIA_TARGETS: Record<string, MediaTargetConfig> = {
     fields: {
       Logo: { mode: 'single', allowedTypes: ['images'] },
       Cover: { mode: 'single', allowedTypes: ['images'] },
-      Slides: { mode: 'multiple', allowedTypes: ['images'] },
+      slides: { mode: 'multiple', allowedTypes: ['images'] },
       Favicon: { mode: 'single', allowedTypes: ['images'] },
       'SEO.socialImage': { mode: 'single', allowedTypes: ['images',] },
     },
@@ -56,7 +56,7 @@ export const MEDIA_TARGETS: Record<string, MediaTargetConfig> = {
     uid: 'api::product.product',
     fields: {
       Thumbnail: { mode: 'single', allowedTypes: ['images'] },
-      Slides: { mode: 'multiple', allowedTypes: ['images'] },
+      slides: { mode: 'multiple', allowedTypes: ['images'] },
       'SEO.socialImage': { mode: 'single', allowedTypes: ['images',] },
     },
   },
@@ -64,7 +64,7 @@ export const MEDIA_TARGETS: Record<string, MediaTargetConfig> = {
     uid: 'api::event.event',
     fields: {
       Thumbnail: { mode: 'single', allowedTypes: ['images'] },
-      Slides: { mode: 'multiple', allowedTypes: ['images'] },
+      slides: { mode: 'multiple', allowedTypes: ['images'] },
       'SEO.socialImage': { mode: 'single', allowedTypes: ['images'] },
     },
   },

@@ -148,21 +148,21 @@ export function registerMiddleware({ strapi }: { strapi: any }) {
                 try {
                   const product = await strapi.documents('api::product.product').findOne({
                     documentId: productId,
-                    populate: ['PRICES']
+                    populate: ['prices']
                   });
 
-                  if (!product || !Array.isArray(product.PRICES)) {
+                  if (!product || !Array.isArray(product.prices)) {
                     console.warn('[order.middleware][async]:warn:[product.missing_prices]', { productId });
                     continue;
                   }
 
-                  const updatedPrices = [...product.PRICES];
+                  const updatedPrices = [...product.prices];
                   let changed = false;
 
                   for (const item of items) {
                     const qty = item.Quantity || 1;
 
-                    // match by STRIPE_ID on the PRICES component
+                    // match by STRIPE_ID on the prices component
                     const matchedPriceIndex = updatedPrices.findIndex((p: any) => p.STRIPE_ID === item.Stripe_price_id);
 
                     if (matchedPriceIndex === -1) {
@@ -192,7 +192,7 @@ export function registerMiddleware({ strapi }: { strapi: any }) {
                     try {
                       const updateResp = await strapi.documents('api::product.product').update({
                         documentId: productId,
-                        data: { PRICES: updatedPrices }
+                        data: { prices: updatedPrices }
                       });
                       console.log('[order.middleware][async]:info:[prices.update_response]', {
                         productId,
@@ -210,12 +210,12 @@ export function registerMiddleware({ strapi }: { strapi: any }) {
                       try {
                         const verify = await strapi.documents('api::product.product').findOne({
                           documentId: productId,
-                          populate: ['PRICES']
+                          populate: ['prices']
                         });
                         console.log('[order.middleware][async]:info:[prices.verify]', {
                           productId,
-                          persistedPricesCount: Array.isArray(verify?.PRICES) ? verify.PRICES.length : 0,
-                          persistedSample: Array.isArray(verify?.PRICES) ? verify.PRICES.slice(0, 3).map((p: any) => ({ STRIPE_ID: p.STRIPE_ID, inventory: p.inventory })) : []
+                          persistedPricesCount: Array.isArray(verify?.prices) ? verify.prices.length : 0,
+                          persistedSample: Array.isArray(verify?.prices) ? verify.prices.slice(0, 3).map((p: any) => ({ STRIPE_ID: p.STRIPE_ID, inventory: p.inventory })) : []
                         });
                         // mark that we persisted something (used later to decide idempotency mark)
                         (ctx as any)._processedAny = true;

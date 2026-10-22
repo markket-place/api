@@ -16,7 +16,7 @@
     }
   },
   "attributes": {
-    "Name": {
+    "name": {
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -35,7 +35,7 @@
       "default": 0,
       "type": "decimal"
     },
-    "Description": {
+    "description": {
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -60,10 +60,10 @@
       },
       "type": "richtext"
     },
-    "SKU": {
+    "sku": {
       "type": "string"
     },
-    "Thumbnail": {
+    "thumbnail": {
       "type": "media",
       "multiple": false,
       "required": false,
@@ -71,7 +71,7 @@
         "images"
       ]
     },
-    "Slides": {
+    "slides": {
       "type": "media",
       "multiple": true,
       "required": false,
@@ -82,7 +82,7 @@
     "slug": {
       "type": "string"
     },
-    "SEO": {
+    "seo": {
       "type": "component",
       "repeatable": false,
       "pluginOptions": {
@@ -92,7 +92,7 @@
       },
       "component": "common.seo"
     },
-    "Tag": {
+    "tag": {
       "type": "component",
       "repeatable": true,
       "pluginOptions": {
@@ -102,7 +102,7 @@
       },
       "component": "common.tag"
     },
-    "PRICES": {
+    "prices": {
       "displayName": "Prices",
       "type": "component",
       "repeatable": true,

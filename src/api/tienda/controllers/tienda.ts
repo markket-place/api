@@ -49,7 +49,7 @@ const STORE_MUTABLE_FIELDS = [
   'Description',
   'Logo',
   'Cover',
-  'Slides',
+  'slides',
   'Favicon',
   'URLS',
   'SEO',
@@ -68,7 +68,7 @@ const CONTENT_TYPE_ALIASES: Record<string, string> = {
   shortners: 'shortner',
 };
 
-const FORCED_CONTENT_POPULATE_FIELDS = ['SEO', 'SEO.socialImage'];
+const FORCED_CONTENT_POPULATE_FIELDS = ['seo', 'seo.socialImage'];
 
 function normalizePopulatePath(value: unknown): string[] {
   if (typeof value !== 'string') {
@@ -1307,12 +1307,12 @@ export default {
     try {
       const storesFromUsers = await strapi.documents('api::store.store').findMany({
         filters: { users: { id: user.id } },
-        populate: ['settings', 'users', 'admin_users', 'owner', 'URLS', 'SEO', 'SEO.socialImage'] as any,
+        populate: ['settings', 'users', 'admin_users', 'owner', 'URLS', 'seo', 'seo.socialImage'] as any,
       }) as any[];
 
       const storesFromAdmins = await strapi.documents('api::store.store').findMany({
         filters: { admin_users: { id: user.id } },
-        populate: ['settings', 'users', 'admin_users', 'owner', 'URLS', 'SEO', 'SEO.socialImage'] as any,
+        populate: ['settings', 'users', 'admin_users', 'owner', 'URLS', 'seo', 'seo.socialImage'] as any,
       }) as any[];
 
       const uniqueByDocumentId = new Map<string, any>();
@@ -1379,7 +1379,7 @@ export default {
           ...(data as any),
           owner: user.id,
         },
-        populate: ['settings', 'users', 'admin_users', 'owner', 'URLS', 'SEO', 'SEO.socialImage'],
+        populate: ['settings', 'users', 'admin_users', 'owner', 'URLS', 'seo', 'seo.socialImage'],
       }) as any;
 
       const updated = await storeDocuments.update({
@@ -1391,7 +1391,7 @@ export default {
             connect: [user.id],
           },
         },
-        populate: ['settings', 'users', 'admin_users', 'owner', 'URLS', 'SEO', 'SEO.socialImage'],
+        populate: ['settings', 'users', 'admin_users', 'owner', 'URLS', 'seo', 'seo.socialImage'],
       }) as any;
 
       const existingOwnerMembership = await membershipDocuments.findMany({
@@ -1696,7 +1696,7 @@ export default {
       const updated = await strapi.documents('api::store.store').update({
         documentId: access.store.documentId,
         data,
-        populate: ['settings', 'users', 'admin_users', 'owner', 'URLS', 'SEO', 'SEO.socialImage'] as any,
+        populate: ['settings', 'users', 'admin_users', 'owner', 'URLS', 'seo', 'seo.socialImage'] as any,
       }) as any;
 
       await strapi.documents('api::store.store').publish({
@@ -1744,7 +1744,7 @@ export default {
 
       const refreshed = await strapi.documents('api::store.store').findOne({
         documentId: access.store.documentId,
-        populate: ['settings', 'users', 'admin_users', 'owner', 'URLS', 'SEO', 'SEO.socialImage'] as any,
+        populate: ['settings', 'users', 'admin_users', 'owner', 'URLS', 'seo', 'seo.socialImage'] as any,
         ...(requestedLocale ? { locale: requestedLocale, status: 'published' as const } : { status: 'published' as const }),
       }) as any;
 
@@ -1786,7 +1786,7 @@ export default {
 
       const refreshed = await strapi.documents('api::store.store').findOne({
         documentId: access.store.documentId,
-        populate: ['settings', 'users', 'admin_users', 'owner', 'URLS', 'SEO', 'SEO.socialImage'] as any,
+        populate: ['settings', 'users', 'admin_users', 'owner', 'URLS', 'seo', 'seo.socialImage'] as any,
         ...(requestedLocale ? { locale: requestedLocale } : {}),
       }) as any;
 
@@ -2093,7 +2093,9 @@ export default {
       const enrichedData = ensureGeneratedSlug(await autoFillSEO(createDataWithUploadIds, config), config);
       const seoLengthError = validateSeoFieldLengths(enrichedData);
       if (seoLengthError) {
-        return ctx.badRequest(seoLengthError);
+        // Update the error message to use the new field name
+        const updatedErrorMessage = seoLengthError.replace(/SEO\./g, 'seo.');
+        return ctx.badRequest(updatedErrorMessage);
       }
 
       const creatorData = config.autoSetCreator
@@ -2294,22 +2296,22 @@ export default {
         // that autoFillSEO only fills empty fields and doesn't wipe stored values like
         // socialImage. Strapi v5 replaces the whole component on write, so any field
         // absent from the payload is cleared — pre-seeding prevents accidental loss.
-        const clientSentSEO = Object.prototype.hasOwnProperty.call(updateData, 'SEO');
-        if (!clientSentSEO && item.SEO && typeof item.SEO === 'object') {
+        const clientSentSEO = Object.prototype.hasOwnProperty.call(updateData, 'seo');
+        if (!clientSentSEO && item.seo && typeof item.seo === 'object') {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const { id: _cid, ...existingSEOFields } = item.SEO as any;
+          const { id: _cid, ...existingSEOFields } = item.seo as any;
           const seoToMerge: any = { ...existingSEOFields };
           // Reduce socialImage to a media reference — full object would be rejected by Strapi v5
           if (seoToMerge.socialImage && typeof seoToMerge.socialImage === 'object') {
             seoToMerge.socialImage = toMediaRef(seoToMerge.socialImage) ?? null;
           }
-          sanitizedData.SEO = seoToMerge;
-        } else if (clientSentSEO && item.SEO && typeof item.SEO === 'object') {
+          sanitizedData.seo = seoToMerge;
+        } else if (clientSentSEO && item.seo && typeof item.seo === 'object') {
           // Client sent SEO but may have omitted socialImage — preserve existing image
           // unless the client explicitly sent null (intentional clear).
-          const clientSEO = sanitizedData.SEO as any;
+          const clientSEO = sanitizedData.seo as any;
           if (clientSEO && typeof clientSEO === 'object' && !Object.prototype.hasOwnProperty.call(clientSEO, 'socialImage')) {
-            const existingImg = (item.SEO as any).socialImage;
+            const existingImg = (item.seo as any).socialImage;
             if (existingImg) {
               clientSEO.socialImage = toMediaRef(existingImg) ?? null;
             }
@@ -2321,7 +2323,9 @@ export default {
         const enrichedData = ensureGeneratedSlug(await autoFillSEO(sanitizedDataWithUploadIds, config), config, item);
         const seoLengthError = validateSeoFieldLengths(enrichedData);
         if (seoLengthError) {
-          return ctx.badRequest(seoLengthError);
+          // Update the error message to use the new field name
+          const updatedErrorMessage = seoLengthError.replace(/SEO\./g, 'seo.');
+          return ctx.badRequest(updatedErrorMessage);
         }
 
         try {
@@ -3254,11 +3258,9 @@ export default {
         await Promise.all(
           duplicateInvites.map((row: any) => strapi.documents('api::auth-magic.magic-code').update({
             documentId: row.documentId,
-            data: {
-              used: true,
-              usedAt: new Date().toISOString(),
-              expiresAt: new Date().toISOString(),
-            },
+            used: true,
+            usedAt: new Date().toISOString(),
+            expiresAt: new Date().toISOString(),
           }))
         );
       }

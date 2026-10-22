@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Email": {
+    "email": {
       "type": "email",
       "required": true
     },
@@ -36,7 +36,7 @@
       "target": "api::subscriber.subscriber-list",
       "inversedBy": "subscribers"
     },
-    "EmailVerified": {
+    "emailVerified": {
       "type": "datetime"
     },
     "extensions": {

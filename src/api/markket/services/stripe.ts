@@ -160,8 +160,8 @@ interface LineItemInput {
 export type ProductForPaymentLink = {
   documentId: string;
   Name: string;
-  PRICES: [any];
-  SKU: string;
+  prices: [any];
+  sku: string;
 };
 
 /**
@@ -317,7 +317,7 @@ export const createPaymentLinkWithPriceIds = async ({
 
   const details = prices.map((price: any) => {
     // @TODO: review, working with elements present in the current client implementations
-    const _price = product.PRICES?.find((p: { Name: string, }) => (p.Name === price.Name));
+    const _price = product.prices?.find((p: { Name: string, }) => (p.Name === price.Name));
 
     return {
       Name: `${product?.Name} - ${_price?.Name || price?.Name}`,
@@ -327,7 +327,7 @@ export const createPaymentLinkWithPriceIds = async ({
       Total_Price: parseFloat(_price?.Price || price.unit_amount || '0') * parseFloat(price.quantity || '0'),
       Description: _price?.Description || price?.Name || product?.Name || 'created with stripe link',
       Stripe_price_id: _price?.STRIPE_ID || '',
-      Stripe_product_id: product.SKU || '',
+      Stripe_product_id: product.sku || '',
       Currency: price.Currency || 'USD',
     };
   });

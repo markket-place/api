@@ -11,18 +11,18 @@
     "comment": ""
   },
   "attributes": {
-    "Name": {
+    "name": {
       "type": "string",
       "required": true
     },
-    "Message": {
+    "message": {
       "type": "text"
     },
     "structure": {
       "type": "json",
       "required": true
     },
-    "SEO": {
+    "seo": {
       "type": "component",
       "repeatable": false,
       "pluginOptions": {

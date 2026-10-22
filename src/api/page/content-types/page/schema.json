@@ -16,7 +16,7 @@
     }
   },
   "attributes": {
-    "Title": {
+    "title": {
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -25,7 +25,7 @@
       "type": "string",
       "required": true
     },
-    "Content": {
+    "content": {
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -33,7 +33,7 @@
       },
       "type": "blocks"
     },
-    "Active": {
+    "active": {
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -74,7 +74,7 @@
       "required": true,
       "maxLength": 40
     },
-    "SEO": {
+    "seo": {
       "type": "component",
       "repeatable": false,
       "pluginOptions": {

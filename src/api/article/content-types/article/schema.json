@@ -12,13 +12,13 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Title": {
+    "title": {
       "type": "string"
     },
-    "Content": {
+    "content": {
       "type": "blocks"
     },
-    "Creator": {
+    "creator": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
@@ -40,12 +40,12 @@
       "relation": "manyToOne",
       "target": "api::store.store"
     },
-    "Tags": {
+    "tags": {
       "type": "component",
       "repeatable": true,
       "component": "common.tag"
     },
-    "SEO": {
+    "seo": {
       "type": "component",
       "repeatable": false,
       "component": "common.seo"

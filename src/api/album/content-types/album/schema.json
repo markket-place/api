@@ -43,7 +43,7 @@
         }
       }
     },
-    "SEO": {
+    "seo": {
       "type": "component",
       "component": "common.seo"
     },

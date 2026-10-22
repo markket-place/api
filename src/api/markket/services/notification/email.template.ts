@@ -484,7 +484,7 @@ export const RSVPNotificationHTml = ({ rsvp, event, store }: { rsvp: any; event:
   const theme = resolveTheme(store);
   const calendarUrl = event?.calendarUrl || event?.data?.object?.calendarUrl || '';
   const attendeeName = rsvp?.name || rsvp?.user?.displayName || rsvp?.email || 'friend';
-  const eventName = event?.Name || event?.title || 'Upcoming event';
+  const eventName = event?.name || event?.title || 'Upcoming event';
   const eventTimezone = event?.timezone || null;
   const eventDate = formatEventDate(event?.startDate, eventTimezone);
   const eventTime = formatEventTimeRange(event?.startDate, event?.endDate, eventTimezone);
@@ -520,7 +520,7 @@ export const RSVPNotificationHTml = ({ rsvp, event, store }: { rsvp: any; event:
 export const EventReminderEmailHtml = ({ event, store, rsvp }: { event: any; store?: any; rsvp?: any }) => {
   const theme = resolveTheme(store);
   const attendeeName = rsvp?.name || rsvp?.email ? maskEmail(rsvp?.email) : 'friend';
-  const eventName = event?.Name || event?.title || 'Upcoming event';
+  const eventName = event?.name || event?.title || 'Upcoming event';
   const eventTimezone = event?.timezone || null;
   const eventDate = formatEventDate(event?.startDate, eventTimezone);
   const eventTime = formatEventTimeRange(event?.startDate, event?.endDate, eventTimezone);

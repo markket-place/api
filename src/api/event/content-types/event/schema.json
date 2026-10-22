@@ -16,7 +16,7 @@
     }
   },
   "attributes": {
-    "Name": {
+    "name": {
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -56,7 +56,7 @@
       "pluginOptions": {},
       "component": "common.address"
     },
-    "Description": {
+    "description": {
       "pluginOptions": {
         "i18n": {
           "localized": true
@@ -96,7 +96,7 @@
       },
       "type": "string"
     },
-    "Thumbnail": {
+    "thumbnail": {
       "type": "media",
       "multiple": false,
       "required": false,
@@ -109,7 +109,7 @@
         }
       }
     },
-    "Slides": {
+    "slides": {
       "type": "media",
       "multiple": true,
       "required": false,
@@ -131,7 +131,7 @@
       "type": "string",
       "required": true
     },
-    "SEO": {
+    "seo": {
       "type": "component",
       "repeatable": false,
       "pluginOptions": {
@@ -141,7 +141,7 @@
       },
       "component": "common.seo"
     },
-    "Tag": {
+    "tag": {
       "type": "component",
       "repeatable": true,
       "pluginOptions": {
@@ -151,7 +151,7 @@
       },
       "component": "common.tag"
     },
-    "PRICES": {
+    "prices": {
       "displayName": "Prices",
       "type": "component",
       "repeatable": true,
