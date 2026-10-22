@@ -220,8 +220,10 @@ const createAction = async (ctx: any) => {
 
             await strapi.documents('api::order.order').update({
               documentId: order.documentId,
-              extra: updatedExtra
-            });
+              data: {
+                extra: updatedExtra
+              }
+            } as any);
           }
         } catch (error: any) {
           console.error('[STRIPE_WEBHOOK] Failed to update balance fee mappings:', error?.message);
@@ -270,8 +272,10 @@ const createAction = async (ctx: any) => {
 
               await strapi.documents('api::order.order').update({
                 documentId: order.documentId,
-                extra: updatedExtra
-              });
+                data: {
+                  extra: updatedExtra
+                }
+              } as any);
             }
           }
         } catch (error: any) {

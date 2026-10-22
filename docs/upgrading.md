@@ -71,6 +71,3 @@ V0.8.0 introduces normalization of attribute names from PascalCase to camelCase 
 ## Review Schema Changes
 - `RatingValue` → `ratingValue`
 - `ReviewText` → `reviewText`
-
-Note: When updating documents via Strapi API, don't wrap attributes in `data` object - pass them directly.
-

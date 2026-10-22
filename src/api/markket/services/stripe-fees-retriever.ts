@@ -184,8 +184,10 @@ async function updateOrderWithFees(orderId: string, fees: ActualStripeFees): Pro
 
     await strapi.documents('api::order.order').update({
       documentId: orderId,
-      extra: updatedExtra
-    });
+      data: {
+        extra: updatedExtra
+      }
+    } as any);
 
     console.log('[FEES_RETRIEVER] Order updated successfully', {
       orderId: orderId.substring(0, 10) + '...',
@@ -235,8 +237,10 @@ async function markRetrievalFailure(orderId: string, errorMessage: string): Prom
 
     await strapi.documents('api::order.order').update({
       documentId: orderId,
-      extra: updatedExtra
-    });
+      data: {
+        extra: updatedExtra
+      }
+    } as any);
 
     console.log('[FEES_RETRIEVER] Marked order as failed fee retrieval', {
       orderId: orderId.substring(0, 10) + '...',

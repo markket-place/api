@@ -14,6 +14,7 @@
     "validate:schemas": "node scripts/validate-schemas.js",
     "api:docs": "node scripts/api-docs.js",
     "api:test": "node scripts/api-test.js",
+    "ts:generate": "yarn strapi ts:generate-types",
     "events:verify-tz": "node scripts/verify-event-timezones.js"
   },
   "dependencies": {
@@ -65,6 +66,7 @@
   "license": "SEE LICENSE IN LICENSE",
   "packageManager": "yarn@1.22.22",
   "devDependencies": {
-    "turbo": "^2.9.6"
+    "turbo": "^2.9.6",
+    "typescript": "^7.0.2"
   }
 }
