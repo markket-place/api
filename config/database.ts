@@ -53,7 +53,7 @@ export default ({ env }) => {
         connectionString: env('DATABASE_URL'),
         schema: env('DATABASE_SCHEMA', 'public'),
         ssl: {
-          rejectUnauthorized: false
+          rejectUnauthorized: env('DATABASE_SSL_REJECT_UNAUTHORIZED', false),
         },
       },
       pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
