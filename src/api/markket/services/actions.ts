@@ -203,24 +203,24 @@ const createAction = async (ctx: any) => {
 
           if (orders?.length > 0) {
             const order = orders[0];
+            const updatedExtra = {
+              ...((order.extra as object) || {}),
+              stripe_actual_fees: {
+                fees_cents: txn.fee,
+                fees_usd: (txn.fee / 100).toFixed(2),
+                net_cents: txn.net,
+                net_usd: (txn.net / 100).toFixed(2),
+                amount_cents: txn.amount,
+                amount_usd: (txn.amount / 100).toFixed(2),
+                source: 'balance_transaction_webhook',
+                retrieved_at: new Date().toISOString(),
+              },
+              fees_retrieval_status: 'success_from_balance_webhook'
+            };
+
             await strapi.documents('api::order.order').update({
               documentId: order.documentId,
-              data: {
-                extra: {
-                  ...((order.extra as object) || {}),
-                  stripe_actual_fees: {
-                    fees_cents: txn.fee,
-                    fees_usd: (txn.fee / 100).toFixed(2),
-                    net_cents: txn.net,
-                    net_usd: (txn.net / 100).toFixed(2),
-                    amount_cents: txn.amount,
-                    amount_usd: (txn.amount / 100).toFixed(2),
-                    source: 'balance_transaction_webhook',
-                    retrieved_at: new Date().toISOString(),
-                  },
-                  fees_retrieval_status: 'success_from_balance_webhook'
-                }
-              }
+              extra: updatedExtra
             });
           }
         } catch (error: any) {
@@ -253,24 +253,24 @@ const createAction = async (ctx: any) => {
 
             if (orders?.length > 0) {
               const order = orders[0];
+              const updatedExtra = {
+                ...((order.extra as object) || {}),
+                stripe_actual_fees: {
+                  fees_cents: balanceTxn.fee,
+                  fees_usd: (balanceTxn.fee / 100).toFixed(2),
+                  net_cents: balanceTxn.net,
+                  net_usd: (balanceTxn.net / 100).toFixed(2),
+                  amount_cents: balanceTxn.amount,
+                  amount_usd: (balanceTxn.amount / 100).toFixed(2),
+                  source: 'charge_webhook_balance_txn',
+                  retrieved_at: new Date().toISOString(),
+                },
+                fees_retrieval_status: 'success_from_charge_webhook'
+              };
+
               await strapi.documents('api::order.order').update({
                 documentId: order.documentId,
-                data: {
-                  extra: {
-                    ...((order.extra as object) || {}),
-                    stripe_actual_fees: {
-                      fees_cents: balanceTxn.fee,
-                      fees_usd: (balanceTxn.fee / 100).toFixed(2),
-                      net_cents: balanceTxn.net,
-                      net_usd: (balanceTxn.net / 100).toFixed(2),
-                      amount_cents: balanceTxn.amount,
-                      amount_usd: (balanceTxn.amount / 100).toFixed(2),
-                      source: 'charge_webhook_balance_txn',
-                      retrieved_at: new Date().toISOString(),
-                    },
-                    fees_retrieval_status: 'success_from_charge_webhook'
-                  }
-                }
+                extra: updatedExtra
               });
             }
           }

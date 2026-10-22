@@ -138,7 +138,7 @@ export default createCoreController('api::shortner.shortner', ({ strapi }) => ({
       // Increment visit count
       await strapi.documents('api::shortner.shortner').update({
         documentId: shortner.documentId,
-        data: { visit: shortner.visit + 1 }
+        visit: shortner.visit + 1
       });
 
       // Redirect to the original URL

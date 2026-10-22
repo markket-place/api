@@ -176,15 +176,15 @@ async function updateOrderWithFees(orderId: string, fees: ActualStripeFees): Pro
 
     const existingExtra = (order.extra as Record<string, any>) || {};
 
+    const updatedExtra = {
+      ...existingExtra,
+      stripe_actual_fees: fees,
+      fees_retrieval_status: 'success',
+    };
+
     await strapi.documents('api::order.order').update({
       documentId: orderId,
-      data: {
-        extra: {
-          ...existingExtra,
-          stripe_actual_fees: fees,
-          fees_retrieval_status: 'success',
-        }
-      }
+      extra: updatedExtra
     });
 
     console.log('[FEES_RETRIEVER] Order updated successfully', {
@@ -226,16 +226,16 @@ async function markRetrievalFailure(orderId: string, errorMessage: string): Prom
 
     const existingExtra = (order.extra as Record<string, any>) || {};
 
+    const updatedExtra = {
+      ...existingExtra,
+      fees_retrieval_status: 'failed',
+      fees_retrieval_error: errorMessage,
+      fees_retrieval_attempted_at: new Date().toISOString(),
+    };
+
     await strapi.documents('api::order.order').update({
       documentId: orderId,
-      data: {
-        extra: {
-          ...existingExtra,
-          fees_retrieval_status: 'failed',
-          fees_retrieval_error: errorMessage,
-          fees_retrieval_attempted_at: new Date().toISOString(),
-        }
-      }
+      extra: updatedExtra
     });
 
     console.log('[FEES_RETRIEVER] Marked order as failed fee retrieval', {

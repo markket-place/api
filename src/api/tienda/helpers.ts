@@ -203,7 +203,7 @@ export function verifyItemBelongsToStore(
  * Non-destructive: only fills empty fields
  */
 export async function autoFillSEO(data: any, config: ContentTypeConfig): Promise<any> {
-  const hasSEOInput = Object.prototype.hasOwnProperty.call(data, 'SEO');
+  const hasSEOInput = Object.prototype.hasOwnProperty.call(data, 'seo');
   const hasTitleInput = Object.prototype.hasOwnProperty.call(data, config.titleField);
   const hasContentInput = Boolean(config.contentField)
     ? Object.prototype.hasOwnProperty.call(data, config.contentField as string)
@@ -214,8 +214,8 @@ export async function autoFillSEO(data: any, config: ContentTypeConfig): Promise
     return data;
   }
 
-  if (!data.SEO || typeof data.SEO !== 'object') {
-    data.SEO = {};
+  if (!data.seo || typeof data.seo !== 'object') {
+    data.seo = {};
   }
 
   const titleText = stripMarkdownAndRichText(data[config.titleField] || '');
@@ -225,8 +225,8 @@ export async function autoFillSEO(data: any, config: ContentTypeConfig): Promise
 
   // Auto-fill metaTitle/metaDescription, preferring OpenRouter generation with safe fallback.
   const summarySource = contentText || titleText;
-  const needsMetaTitle = !data.SEO.metaTitle;
-  const needsMetaDescription = !data.SEO.metaDescription;
+  const needsMetaTitle = !data.seo.metaTitle;
+  const needsMetaDescription = !data.seo.metaDescription;
 
   if ((needsMetaTitle || needsMetaDescription) && summarySource) {
     const fallbackMetaTitle = smartTruncate(titleText || summarySource, 60).replace(/…$/, '');
@@ -264,11 +264,11 @@ export async function autoFillSEO(data: any, config: ContentTypeConfig): Promise
     }
 
     if (needsMetaTitle) {
-      data.SEO.metaTitle = aiMetaTitle || fallbackMetaTitle;
+      data.seo.metaTitle = aiMetaTitle || fallbackMetaTitle;
     }
 
     if (needsMetaDescription) {
-      data.SEO.metaDescription = aiMetaDescription || fallbackMetaDescription;
+      data.seo.metaDescription = aiMetaDescription || fallbackMetaDescription;
     }
   }
 
@@ -281,10 +281,10 @@ export async function autoFillSEO(data: any, config: ContentTypeConfig): Promise
   }
 
   // Generate keywords when empty.
-  if (!data.SEO.metaKeywords) {
+  if (!data.seo.metaKeywords) {
     const keywords = generateKeywordsFromText(titleText, contentText);
     if (keywords) {
-      data.SEO.metaKeywords = keywords;
+      data.seo.metaKeywords = keywords;
       if (Object.prototype.hasOwnProperty.call(data, 'keywords') && !data.keywords) {
         data.keywords = keywords;
       }
@@ -308,16 +308,16 @@ const SEO_LENGTH_FIELDS = [
  * Returns null when valid, otherwise a user-facing message.
  */
 export function validateSeoFieldLengths(data: any): string | null {
-  if (!data || typeof data !== 'object' || !data.SEO || typeof data.SEO !== 'object') {
+  if (!data || typeof data !== 'object' || !data.seo || typeof data.seo !== 'object') {
     return null;
   }
 
   for (const field of SEO_LENGTH_FIELDS) {
-    const raw = data.SEO[field];
+    const raw = data.seo[field];
     if (raw == null) continue;
     const value = String(raw);
     if (value.length > SEO_STRING_MAX_LENGTH) {
-      return `SEO.${field} is too long (${value.length}). Maximum length is ${SEO_STRING_MAX_LENGTH} characters.`;
+      return `seo.${field} is too long (${value.length}). Maximum length is ${SEO_STRING_MAX_LENGTH} characters.`;
     }
   }
 

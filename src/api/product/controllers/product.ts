@@ -81,7 +81,7 @@ const coreController = factories.createCoreController('api::product.product', ({
         ctx,
         action: 'update',
         contentTypeUid: 'api::product.product',
-        stripeProductField: 'SKU',
+        stripeProductField: 'sku',
       });
       ctx.body = {
         success: true,

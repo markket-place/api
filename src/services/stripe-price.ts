@@ -9,17 +9,17 @@ type StripePriceCreateParams = Parameters<StripeClient['prices']['create']>[0];
  */
 export async function syncPricesWithStripe(product: any): Promise<void> {
   const stripeClient = getStripeClient();
-  if (!stripeClient || !product.SKU || !Array.isArray(product.PRICES)) {
+  if (!stripeClient || !product.sku || !Array.isArray(product.prices)) {
     return;
   }
 
   console.log('[STRIPE_PRICE_SERVICE] Syncing prices with Stripe');
-  console.log('[STRIPE_PRICE_SERVICE] Product PRICES array:', JSON.stringify(product.PRICES, null, 2));
+  console.log('[STRIPE_PRICE_SERVICE] Product prices array:', JSON.stringify(product.prices, null, 2));
 
   const createdPrices = [];
   const skippedPrices = [];
-  for (let i = 0; i < product.PRICES.length; i++) {
-    const price = product.PRICES[i];
+  for (let i = 0; i < product.prices.length; i++) {
+    const price = product.prices[i];
     const missingFields = [];
     if (!price.Name || typeof price.Name !== 'string' || price.Name.trim() === '') missingFields.push('Name');
     if (price.Price === undefined || price.Price === null || isNaN(price.Price) || Number(price.Price) <= 0) missingFields.push('Price');
@@ -88,7 +88,7 @@ export async function syncPricesWithStripe(product: any): Promise<void> {
       const priceData: StripePriceCreateParams = {
         unit_amount: Math.round(Number(price.Price) * 100),
         currency: (price.Currency || 'usd').toLowerCase(),
-        product: product.SKU,
+        product: product.sku,
         nickname: price.Name || `${product.Name} - Price ${i + 1}`,
         ...(price.billing_type === 'recurring' && {
           recurring: {

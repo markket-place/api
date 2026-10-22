@@ -64,7 +64,7 @@ async function persistStoreStatsCache(storeId: string, payload: StoreStatsCacheP
     if (settings?.documentId) {
       await strapi.documents('api::store.store-setting').update({
         documentId: settings.documentId,
-        data: { meta: nextMeta },
+        meta: nextMeta
       });
       return;
     }
@@ -224,9 +224,9 @@ export async function getRecentOrders(storeId: string, limit: number = 10): Prom
  */
 export function calculateOnboardingProgress(store: any, counts: ContentCounts, salesSummary: SalesSummary) {
   // Check SEO completeness (shows metadata understanding)
-  const hasSEOTitle = !!(store?.SEO?.metaTitle && store.SEO.metaTitle.length > 10);
-  const hasSEODescription = !!(store?.SEO?.metaDescription && store.SEO.metaDescription.length > 50);
-  const hasSEOImage = !!store?.SEO?.socialImage?.id;
+  const hasSEOTitle = !!(store?.seo?.metaTitle && store.seo.metaTitle.length > 10);
+  const hasSEODescription = !!(store?.seo?.metaDescription && store.seo.metaDescription.length > 50);
+  const hasSEOImage = !!store?.seo?.socialImage?.id;
   const hasSEOComplete = hasSEOTitle && hasSEODescription;
 
   // Debug logging to see what we actually get
@@ -235,7 +235,7 @@ export function calculateOnboardingProgress(store: any, counts: ContentCounts, s
     Logo: store?.Logo ? { id: store.Logo.id, url: store.Logo.url } : null,
     Cover: store?.Cover ? { id: store.Cover.id, url: store.Cover.url } : null,
     Favicon: store?.Favicon ? { id: store.Favicon.id, url: store.Favicon.url } : null,
-    SEO_socialImage: store?.SEO?.socialImage ? { id: store.SEO.socialImage.id } : null,
+    SEO_socialImage: store?.seo?.socialImage ? { id: store.seo.socialImage.id } : null,
   });
 
   // Count images - populated media have .id and .url
@@ -243,7 +243,7 @@ export function calculateOnboardingProgress(store: any, counts: ContentCounts, s
     store?.Logo?.id,
     store?.Cover?.id,
     store?.Favicon?.id,
-    store?.SEO?.socialImage?.id,
+    store?.seo?.socialImage?.id,
   ].filter(Boolean).length;
 
   const checks = {
@@ -334,7 +334,7 @@ export function calculateOnboardingProgress(store: any, counts: ContentCounts, s
       has_title: hasSEOTitle,
       has_description: hasSEODescription,
       has_image: hasSEOImage,
-      has_keywords: !!(store?.SEO?.metaKeywords),
+      has_keywords: !!(store?.seo?.metaKeywords),
       is_complete: hasSEOComplete && hasSEOImage,
     },
   };
@@ -355,7 +355,7 @@ export async function getDashboardData(storeId: string) {
         Favicon: true,
         settings: true,
         URLS: true,
-        SEO: {
+        seo: {
           populate: {
             socialImage: true
           }

@@ -83,13 +83,13 @@ export async function createStripeProduct(product: any): Promise<string | null> 
   // Add images if available
   if (product.Thumbnail?.url) {
     productData.images = [getFullImageUrl(product.Thumbnail.url)];
-  } else if (product.Slides && product.Slides.length > 0) {
-    productData.images = product.Slides
+  } else if (product.slides && product.slides.length > 0) {
+    productData.images = product.slides
       .filter((slide: any) => slide.url)
       .slice(0, 8)
       .map((slide: any) => getFullImageUrl(slide.url));
   } else {
-    console.warn('[STRIPE_PRODUCT_SERVICE] No Thumbnail or Slides found for product images. Skipping image sync.');
+    console.warn('[STRIPE_PRODUCT_SERVICE] No Thumbnail or slides found for product images. Skipping image sync.');
   }
 
   try {
@@ -143,14 +143,14 @@ export async function updateStripeProductMetadata(product: any): Promise<void> {
     const newImages: string[] = [];
     if (product.Thumbnail?.url) {
       newImages.push(getFullImageUrl(product.Thumbnail.url));
-    } else if (product.Slides && product.Slides.length > 0) {
-      const slideImages = product.Slides
+    } else if (product.slides && product.slides.length > 0) {
+      const slideImages = product.slides
         .filter((slide: any) => slide.url)
         .slice(0, 8)
         .map((slide: any) => getFullImageUrl(slide.url));
       newImages.push(...slideImages);
     } else {
-      console.warn('[STRIPE_PRODUCT_SERVICE] No Thumbnail or Slides found for product images. Skipping image update.');
+      console.warn('[STRIPE_PRODUCT_SERVICE] No Thumbnail or slides found for product images. Skipping image update.');
     }
 
     const existingImages = existingProduct.images || [];

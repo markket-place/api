@@ -99,7 +99,7 @@ export default ({ strapi }) => ({
         console.log('Fetching store by ID:', store_id);
         store = await strapi.documents('api::store.store').findOne({
           documentId: store_id,
-          populate: ['settings', 'SEO']
+          populate: ['settings', 'seo']
         });
         console.log('Store found by ID:', !!store);
       }
@@ -110,7 +110,7 @@ export default ({ strapi }) => ({
 
         const stores = await strapi.documents('api::store.store').findMany({
           filters: { slug: DEFAULT_STORE_SLUG },
-          populate: ['settings', 'SEO'],
+          populate: ['settings', 'seo'],
           limit: 1
         });
 
@@ -145,7 +145,7 @@ export default ({ strapi }) => ({
 
       // Create a short URL for the magic link with store-specific branding
       // Use the store we already fetched (either by store_id or default)
-      const storeTitle = store?.title || store?.SEO?.metaTitle || 'Markkët';
+      const storeTitle = store?.title || store?.seo?.metaTitle || 'Markkët';
       console.log('Creating shortener with:', { alias, magicUrl, storeTitle });
 
       const shortner = await strapi.documents('api::shortner.shortner').create({
