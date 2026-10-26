@@ -53,7 +53,9 @@ export default ({ env }) => {
         connectionString: env('DATABASE_URL'),
         schema: env('DATABASE_SCHEMA', 'public'),
         ssl: {
-          rejectUnauthorized: env('DATABASE_SSL_REJECT_UNAUTHORIZED', false),
+          rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', false),
+          // Force SSL mode for Laravel Cloud
+          require: true,
         },
       },
       pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
