@@ -56,7 +56,9 @@ export default ({ env }) => {
         user: env('DATABASE_USERNAME', 'strapi'),
         password: env('DATABASE_PASSWORD', ''),
         schema: env('DATABASE_SCHEMA', 'public'),
-        ssl: env('DATABASE_SSL', false) ? { rejectUnauthorized: false } : false,
+        ssl: env.bool('DATABASE_SSL', false) ? {
+          rejectUnauthorized: env('DATABASE_SSL_REJECT_UNAUTHORIZED', false),
+        } : false,
       },
       debug: false,
       pool: { min: env('DATABASE_POOL_MIN', 2), max: env('DATABASE_POOL_MAX', 10) },
