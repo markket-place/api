@@ -135,11 +135,14 @@ export default createCoreController('api::shortner.shortner', ({ strapi }) => ({
         return ctx.notFound('Short URL not found');
       }
 
+      const newCount = ((shortner.visit || 0) + 1) as Number;
+      console.log('shortner_url', { newCount, url: shortner.documentId });
+
       // Increment visit count
       await strapi.documents('api::shortner.shortner').update({
         documentId: shortner.documentId,
         data: {
-          visit: shortner.visit + 1
+          visit: newCount,
         }
       });
 
