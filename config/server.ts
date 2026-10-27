@@ -7,6 +7,5 @@ export default ({ env }) => ({
   proxy: true,
   webhooks: {
     populateRelations: env.bool('WEBHOOKS_POPULATE_RELATIONS', false),
-  },
-  url: env('MARKKET_API_URL', `${env('HOST', '0.0.0.0')}:${env.int('PORT', '1337')}`),
+  }
 });
