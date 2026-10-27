@@ -6,21 +6,26 @@ import { registerStoreVisibilityMiddleware } from './middlewares/store-visibilit
 export default {
   register({ strapi }) {
     console.log('strapi:register');
-
-    const healthPaths = [
+    const healthRoutes = [
       '/',
       '/up',
       '/health',
       '/_health',
-      '/healthz',
-    ];
-
-    healthPaths.forEach(path => {
-      strapi.server.router.get(path, (ctx) => {
+      '/healthz'
+    ].map(path => ({
+      method: 'GET',
+      path: path,
+      handler: (ctx) => {
         ctx.status = 200;
         ctx.body = 'OK';
-      });
-    });
+      },
+      config: {
+        auth: false,
+      },
+    }));
+
+    // Inject them safely into the core runtime router block
+    strapi.server.routes(healthRoutes);
   },
 
   bootstrap({ strapi }) {
