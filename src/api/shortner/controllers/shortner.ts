@@ -143,7 +143,7 @@ export default createCoreController('api::shortner.shortner', ({ strapi }) => ({
         documentId: shortner.documentId,
         data: {
           visit: newCount,
-        }
+        } as any
       });
 
       // Redirect to the original URL
