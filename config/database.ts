@@ -57,7 +57,7 @@ export default ({ env }) => {
         password: env('DATABASE_PASSWORD', ''),
         schema: env('DATABASE_SCHEMA', 'public'),
         ssl: env.bool('DATABASE_SSL', false) ? {
-          rejectUnauthorized: env('DATABASE_SSL_REJECT_UNAUTHORIZED', false),
+          rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', false),
         } : false,
       },
       debug: false,
