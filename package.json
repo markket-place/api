@@ -1,12 +1,12 @@
 {
   "name": "markket-api",
   "private": true,
-  "version": "0.8.99",
+  "version": "0.8.999",
   "description": "Markkët API, powered by strapi:postgres",
   "scripts": {
     "dev": "yarn strapi develop",
     "develop": "strapi develop",
-    "start": "strapi start",
+    "start": "sleep 2 && strapi start",
     "build:plugin": "echo 'skipping plugin npm run build --prefix src/plugins/markketplace'",
     "build": "yarn run build:plugin && yarn strapi build",
     "deploy": "yarn strapi deploy",
