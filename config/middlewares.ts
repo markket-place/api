@@ -2,6 +2,7 @@ export default [
   'strapi::logger',
   'strapi::errors',
   'global::short-url', // Custom middleware for /s/:slug redirects
+  'global::health-check', // Health check middleware for Laravel Cloud
   {
     name: 'strapi::security',
     config: {

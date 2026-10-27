@@ -4,28 +4,9 @@ import { registerEventReminderMiddleware, sendDueEventReminders } from './middle
 import { registerStoreVisibilityMiddleware } from './middlewares/store-visibility';
 
 export default {
-  register({ strapi }) {
-    console.log('strapi:register');
-    const healthRoutes = [
-      '/',
-      '/up',
-      '/health',
-      '/_health',
-      '/healthz'
-    ].map(path => ({
-      method: 'GET',
-      path: path,
-      handler: (ctx) => {
-        ctx.status = 200;
-        ctx.body = 'OK';
-      },
-      config: {
-        auth: false,
-      },
-    }));
 
-    // Inject them safely into the core runtime router block
-    strapi.server.routes(healthRoutes);
+  register({ strapi }) {
+    console.log('strapi:register', { strapi: strapi?.ctx });
   },
 
   bootstrap({ strapi }) {
