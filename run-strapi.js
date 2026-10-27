@@ -16,4 +16,7 @@ const cliPath = path.join(strapiDir, binPath);
 const args = process.argv.slice(2);
 
 // 5. Execute it flawlessly across environments
-fork(cliPath, args, { stdio: 'inherit' });
+fork(cliPath, args, {
+  stdio: 'inherit',
+  env: process.env
+});
