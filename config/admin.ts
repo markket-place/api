@@ -14,5 +14,6 @@ export default ({ env }) => ({
     nps: env.bool('FLAG_NPS', true),
     promoteEE: env.bool('FLAG_PROMOTE_EE', true),
   },
-  url: env('MARKKET_API_URL', `${env('HOST', '0.0.0.0')}:${env.int('PORT', '1337')}`),
+  url: env('MARKKET_ADMIN_URL', '/admin'),
+  serveAdminPanel: env.bool('SERVE_ADMIN', true),
 });
