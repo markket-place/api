@@ -61,4 +61,4 @@ ENV PATH /opt/node_modules/.bin:/opt/app/node_modules/.bin:$PATH
 EXPOSE 1337
 
 # No final 'yarn install' needed; everything is already baked and pruned!
-CMD ["node", "run-strapi.js", "start"]
+CMD ["yarn", "start"]
