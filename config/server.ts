@@ -7,7 +7,9 @@ export default ({ env }) => ({
   proxy: {
     koa: true
   },
+  url: env('MARKKET_API_URL', 'https://api.markket.place'),
   webhooks: {
     populateRelations: env.bool('WEBHOOKS_POPULATE_RELATIONS', false),
   }
 });
+
