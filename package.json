@@ -1,7 +1,7 @@
 {
   "name": "markket-api",
   "private": true,
-  "version": "0.8.6",
+  "version": "0.8.7",
   "description": "Markkët API, powered by strapi:postgres",
   "scripts": {
     "dev": "yarn strapi develop",
@@ -37,7 +37,8 @@
     "sharp": "^0.35.3",
     "stripe": "^22.0.1",
     "styled-components": "^6.4.0",
-    "twilio": "^5.13.1"
+    "twilio": "^5.13.1",
+    "vite": "^8.3.5"
   },
   "optionalDependencies": {
     "@img/sharp-darwin-arm64": "0.34.5",
@@ -51,7 +52,7 @@
     "@lezer/highlight": "1.2.1",
     "style-mod": "4.1.2",
     "nodemailer": "9.0.1",
-    "vite": "6.4.2"
+    "vite": "6.4.3"
   },
   "author": {
     "name": "calimania"
