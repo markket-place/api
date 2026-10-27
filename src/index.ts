@@ -4,8 +4,23 @@ import { registerEventReminderMiddleware, sendDueEventReminders } from './middle
 import { registerStoreVisibilityMiddleware } from './middlewares/store-visibility';
 
 export default {
-  register(/*{ strapi }*/) {
-    console.log('[markket]:register');
+  register({ strapi }) {
+    console.log('strapi:register');
+
+    const healthPaths = [
+      '/',
+      '/up',
+      '/health',
+      '/_health',
+      '/healthz',
+    ];
+
+    healthPaths.forEach(path => {
+      strapi.server.router.get(path, (ctx) => {
+        ctx.status = 200;
+        ctx.body = 'OK';
+      });
+    });
   },
 
   bootstrap({ strapi }) {
