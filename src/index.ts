@@ -2,6 +2,7 @@ import { registerMiddleware } from './middlewares/encrypt-extensions';
 import { registerMiddleware as registerPriceInventoryChanges } from './middlewares/price-inventory-changes';
 import { registerEventReminderMiddleware, sendDueEventReminders } from './middlewares/event-reminders';
 import { registerStoreVisibilityMiddleware } from './middlewares/store-visibility';
+import { startupStatus } from './startup-status';
 
 export default {
 
@@ -31,5 +32,8 @@ export default {
         }
       },
     });
+
+    // Mark the application as ready after bootstrap completes
+    startupStatus.markAsReady();
   },
 };
