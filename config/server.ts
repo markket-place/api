@@ -4,9 +4,9 @@ export default ({ env }) => ({
   app: {
     keys: env.array('APP_KEYS'),
   },
-  proxy: { koa: true },
+  proxy: true,
   webhooks: {
     populateRelations: env.bool('WEBHOOKS_POPULATE_RELATIONS', false),
   },
-  url: env('MARKKET_API_URL', 'http://localhost:1337'),
+  url: env('MARKKET_API_URL', `${env('HOST', '0.0.0.0')}:${env.int('PORT', '1337')}`),
 });
