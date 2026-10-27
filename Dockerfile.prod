@@ -28,6 +28,8 @@ RUN yarn install --frozen-lockfile --ignore-platform
 
 WORKDIR /opt/app
 COPY . .
+
+# Build the admin panel explicitly
 RUN yarn build
 
 # Clean up development dependencies to keep the image lean
@@ -56,9 +58,13 @@ COPY --from=build --chown=node:node /opt/node_modules ./node_modules
 WORKDIR /opt/app
 COPY --from=build --chown=node:node /opt/app ./
 
+# Ensure the dist directory is copied correctly
+RUN ls -la dist/build > /dev/null 2>&1 || echo "No dist/build directory found"
+
 ENV PATH /opt/node_modules/.bin:/opt/app/node_modules/.bin:$PATH
 
-EXPOSE 1337
+# Use the PORT environment variable or default to 1337
+EXPOSE ${PORT:-1337}
 
 # Use the standard Strapi start command
 CMD ["yarn", "start"]

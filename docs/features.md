@@ -20,7 +20,11 @@
 - [ ] api: notify buyer of order change
 - [x] storefront: Order,Purchase sends an email to slug@markket.place
 - [ ] api: forward email to store owner / notify them, so they could reply directly from their inbox - iphone when ready
-- [ ] api: normalize attribute names in schemas
+- [ ] markket: use cloudflare R2
+
+### v0.9.5
+- [x] api: normalize attribute names in schemas
+- [x] markket: deploy to laravel cloud
 
 ### v0.7.7
 - [x] common.prices schema supports stripe.price.recurring options

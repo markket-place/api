@@ -8,38 +8,46 @@ export default ({ env }) => ({
   },
   upload: {
     config: {
-      sizeLimit: 10 * 1024 * 1024, // 10mb in bytes
-      provider: "aws-s3",
+      sizeLimit: 10 * 1024 * 1024,
+      provider: 'aws-s3',
       providerOptions: {
+        baseUrl: env('R2_PUBLIC_URL'),
+        rootPath: env('R2_ROOT_PATH', 'uploads'),
         s3Options: {
           credentials: {
-            accessKeyId: env('DO_SPACE_ACCESS_KEY'),
-            secretAccessKey: env('DO_SPACE_SECRET_KEY'),
+            accessKeyId: env('R2_ACCESS_KEY_ID'),
+            secretAccessKey: env('R2_ACCESS_SECRET'),
           },
-          endpoint: `https://${env('DO_SPACE_ENDPOINT')}`,
-          region: 'nyc3', // Digital Ocean region
-          forcePathStyle: false, // Digital Ocean Spaces uses virtual hosted-style
+          endpoint: env('R2_ENDPOINT'),
+          region: 'auto',
           params: {
-            Bucket: env('DO_SPACE_BUCKET'),
+            Bucket: env('R2_BUCKET'),
+            // Cloudflare R2 does not support ACLs.
           },
-          upload: {
-            ACL: 'public-read',
-          },
-          uploadPath: env('DO_SPACE_DIRECTORY', 'uploads'),
-          baseUrl: env('DO_SPACE_CDN') || `https://${env('DO_SPACE_BUCKET')}.${env('DO_SPACE_ENDPOINT')}`,
         },
+      },
+      actionOptions: {
+        upload: {},
+        uploadStream: {},
+        delete: {},
       },
     },
   },
   email: {
     config: {
-      provider: 'sendgrid',
+      provider: 'nodemailer',
       providerOptions: {
-        apiKey: env('SENDGRID_API_KEY'),
+        host: env('SMTP_HOST'),
+        port: env.int('SMTP_PORT', 465),
+        secure: true,
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
       },
       settings: {
-        defaultFrom: env('SENDGRID_FROM_EMAIL', 'noreply@markket.place'),
-        defaultReplyTo: env('SENDGRID_REPLY_TO_EMAIL', 'support@markket.place'),
+       defaultFrom: env('SMTP_FROM_EMAIL', 'noreply@markket.place'),
+       defaultReplyTo: env('SMTP_REPLY_TO_EMAIL', 'support@markket.place'),
       },
     },
   },
