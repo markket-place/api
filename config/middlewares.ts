@@ -15,12 +15,16 @@ export default [
             'data:',
             'blob:',
             '*.digitaloceanspaces.com',
+            'https://objects.markket.place',
+            '*.markket.place'
           ],
           'media-src': [
             "'self'",
             'data:',
             'blob:',
+            'https://objects.markket.place',
             '*.digitaloceanspaces.com',
+            '*.markket.place'
           ],
           upgradeInsecureRequests: null,
         },
