@@ -19,7 +19,7 @@ export interface ContentTypeConfig {
   mediaFields?: string[];           // Single/multi media — strip to id only
   relationFields?: string[];        // Relation fields — convert populated objects to connect format
   componentFields?: string[];       // Repeatable components — strip id to avoid stale entry conflicts
-  nestedMediaFields?: string[];     // Dot-path media inside components, e.g. 'SEO.socialImage' — strip to id only
+  nestedMediaFields?: string[];     // Dot-path media inside components, e.g. 'seo.socialImage' — strip to id only
 }
 
 export const CONTENT_TYPES: Record<string, ContentTypeConfig> = {

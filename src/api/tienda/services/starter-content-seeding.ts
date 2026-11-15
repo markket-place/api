@@ -1,21 +1,21 @@
 type StarterPageTemplate = {
-  Title: string;
+  title: string;
   slug: string;
-  SEO: {
+  seo: {
     metaTitle: string;
     metaDescription: string;
   };
-  Content?: any[];
+  content?: any[];
 };
 
 type StarterArticleTemplate = {
-  Title: string;
+  title: string;
   slug: string;
-  SEO: {
+  seo: {
     metaTitle: string;
     metaDescription: string;
   };
-  Content?: any[];
+  content?: any[];
 };
 
 type StarterSeedContext = {
@@ -28,9 +28,9 @@ type StarterSeedContext = {
 function buildStarterPageTemplates(storeName: string): StarterPageTemplate[] {
   return [
     {
-      Title: 'Homepage',
+      title: 'Homepage',
       slug: 'home',
-      Content: [
+      content: [
         {
           type: 'heading',
           level: 1,
@@ -60,15 +60,15 @@ function buildStarterPageTemplates(storeName: string): StarterPageTemplate[] {
           ],
         },
       ],
-      SEO: {
+      seo: {
         metaTitle: `${storeName} Home`,
         metaDescription: `Explore ${storeName}: useful resources, fresh updates, and a clear path to get started.`,
       },
     },
     {
-      Title: `${storeName} Newsletter`,
+      title: `${storeName} Newsletter`,
       slug: 'newsletter',
-      Content: [
+      content: [
         {
           type: 'heading',
           level: 1,
@@ -98,15 +98,15 @@ function buildStarterPageTemplates(storeName: string): StarterPageTemplate[] {
           ],
         },
       ],
-      SEO: {
+      seo: {
         metaTitle: `${storeName} Newsletter`,
         metaDescription: `Subscribe to ${storeName} for clear updates, practical ideas, and occasional highlights.`,
       },
     },
     {
-      Title: `About ${storeName}`,
+      title: `About ${storeName}`,
       slug: 'about',
-      Content: [
+      content: [
         {
           type: 'heading',
           level: 1,
@@ -136,7 +136,7 @@ function buildStarterPageTemplates(storeName: string): StarterPageTemplate[] {
           ],
         },
       ],
-      SEO: {
+      seo: {
         metaTitle: `About ${storeName}`,
         metaDescription: `Learn the story behind ${storeName} and the values guiding its work and updates.`,
       },
@@ -179,9 +179,9 @@ async function seedAndPublishStarterPages(strapiInstance: any, params: {
 
 function buildStarterArticleTemplate(storeName: string, storeSlug: string): StarterArticleTemplate {
   return {
-    Title: `A first note from ${storeName}`,
+    title: `A first note from ${storeName}`,
     slug: `first-note-${storeSlug}`,
-    Content: [
+    content: [
       {
         type: 'heading',
         level: 1,
@@ -211,7 +211,7 @@ function buildStarterArticleTemplate(storeName: string, storeSlug: string): Star
         ],
       },
     ],
-    SEO: {
+    seo: {
       metaTitle: `A first note from ${storeName}`,
       metaDescription: `Meet ${storeName} in this opening note and discover what is coming next.`,
     },
@@ -268,10 +268,10 @@ export async function upsertStarterPagesForStore(strapiInstance: any, params: {
         documentId: existing.documentId,
         locale: defaultLocale,
         data: {
-          Title: template.Title,
-          Active: true,
-          SEO: template.SEO,
-          Content: template.Content,
+          title: template.title,
+          active: true,
+          seo: template.seo,
+          content: template.content,
         } as any,
       });
 
@@ -287,13 +287,13 @@ export async function upsertStarterPagesForStore(strapiInstance: any, params: {
     const createdPage = await strapiInstance.documents('api::page.page').create({
       locale: defaultLocale,
       data: {
-        Title: template.Title,
+        title: template.title,
         slug: template.slug,
-        Active: true,
+        active: true,
         store: storeDocumentId,
         owner: ownerId,
-        SEO: template.SEO,
-        ...(template.Content ? { Content: template.Content } : {}),
+        seo: template.seo,
+        ...(template.content ? { content: template.content } : {}),
       } as any,
     });
 
@@ -340,11 +340,11 @@ export async function upsertStarterArticleForStore(strapiInstance: any, params: 
     await strapiInstance.documents('api::article.article').update({
       documentId: existing.documentId,
       data: {
-        Title: template.Title,
+        title: template.title,
         slug: template.slug,
         store: storeDocumentId,
-        Content: template.Content,
-        SEO: template.SEO,
+        content: template.content,
+        seo: template.seo,
       } as any,
     });
 
@@ -355,11 +355,11 @@ export async function upsertStarterArticleForStore(strapiInstance: any, params: 
 
   const starterArticle = await strapiInstance.documents('api::article.article').create({
     data: {
-      Title: template.Title,
+      title: template.title,
       slug: template.slug,
       store: storeDocumentId,
-      Content: template.Content,
-      SEO: template.SEO,
+      content: template.content,
+      seo: template.seo,
     } as any,
   });
 

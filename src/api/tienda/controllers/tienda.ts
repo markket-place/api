@@ -112,7 +112,7 @@ function collectPopulateFields(input: unknown, parentPath = ''): string[] {
         return [];
       }
 
-      // Support qs-style formats: populate[SEO][populate][0]=socialImage
+      // Support qs-style formats: populate[seo][populate][0]=socialImage
       if (key === 'populate') {
         return collectPopulateFields(rawValue, parentPath);
       }
