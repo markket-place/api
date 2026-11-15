@@ -1,23 +1,23 @@
 import { openRouterChatCompletion, parseJsonFromModelText } from './openrouter';
 
 type StarterPageTemplate = {
-  Title: string;
+  title: string;
   slug: 'home' | 'newsletter' | 'about';
-  SEO: {
+  seo: {
     metaTitle: string;
     metaDescription: string;
   };
-  Content?: any[];
+  content?: any[];
 };
 
 type StarterArticleTemplate = {
-  Title: string;
+  title: string;
   slug: string;
-  SEO: {
+  seo: {
     metaTitle: string;
     metaDescription: string;
   };
-  Content?: any[];
+  content?: any[];
 };
 
 type StarterOwnerEmailTemplate = {
@@ -70,40 +70,40 @@ function toHeadingBlock(text: string) {
 function fallbackStarterPages(storeName: string): StarterPageTemplate[] {
   return [
     {
-      Title: 'Homepage',
+      title: 'Homepage',
       slug: 'home',
-      Content: [
+      content: [
         toHeadingBlock(`Welcome to ${storeName}`),
         toParagraphBlock(`${storeName} is a focused space for useful ideas, practical resources, and updates that help people move forward.`),
         toParagraphBlock('Start with the essentials, explore what is new, and check back for steady improvements each week.'),
       ],
-      SEO: {
+      seo: {
         metaTitle: `${storeName} Home`,
         metaDescription: `Explore ${storeName}: useful resources, fresh updates, and a clear path to get started.`,
       },
     },
     {
-      Title: `${storeName} Newsletter`,
+      title: `${storeName} Newsletter`,
       slug: 'newsletter',
-      Content: [
+      content: [
         toHeadingBlock('Stay close to the story'),
         toParagraphBlock(`Sign up for useful updates, new ideas, and occasional highlights from ${storeName}.`),
         toParagraphBlock('No noise, just meaningful updates when there is something genuinely worth sharing.'),
       ],
-      SEO: {
+      seo: {
         metaTitle: `${storeName} Newsletter`,
         metaDescription: `Subscribe to ${storeName} for clear updates, practical ideas, and occasional highlights.`,
       },
     },
     {
-      Title: `About ${storeName}`,
+      title: `About ${storeName}`,
       slug: 'about',
-      Content: [
+      content: [
         toHeadingBlock('About'),
         toParagraphBlock(`${storeName} exists to share thoughtful work, useful guidance, and a clear perspective on what matters.`),
         toParagraphBlock('Everything here is designed to be practical, trustworthy, and easy to apply in real life.'),
       ],
-      SEO: {
+      seo: {
         metaTitle: `About ${storeName}`,
         metaDescription: `Learn the story behind ${storeName} and the values guiding its work and updates.`,
       },
@@ -113,14 +113,14 @@ function fallbackStarterPages(storeName: string): StarterPageTemplate[] {
 
 function fallbackStarterArticle(storeName: string, storeSlug: string): StarterArticleTemplate {
   return {
-    Title: `A first note from ${storeName}`,
+    title: `A first note from ${storeName}`,
     slug: `first-note-${storeSlug}`,
-    Content: [
+    content: [
       toHeadingBlock(`Hello from ${storeName}`),
       toParagraphBlock(`${storeName} is now open, and this first note is our way of saying welcome.`),
       toParagraphBlock('Expect useful ideas, occasional stories, and timely updates whenever something meaningful is ready.'),
     ],
-    SEO: {
+    seo: {
       metaTitle: `A first note from ${storeName}`,
       metaDescription: `Meet ${storeName} in this opening note and discover what is coming next.`,
     },
@@ -192,20 +192,20 @@ function normalizeAiPages(input: unknown, storeName: string): StarterPageTemplat
     const defaultPage = bySlug.get(slug)!;
     const rawPage = rawBySlug.get(slug) || {};
 
-    const title = clampText(rawPage?.title, defaultPage.Title, 90);
-    const seoDescription = clampText(rawPage?.seoDescription, defaultPage.SEO.metaDescription, 160);
+    const title = clampText(rawPage?.title, defaultPage.title, 90);
+    const seoDescription = clampText(rawPage?.seoDescription, defaultPage.seo.metaDescription, 160);
     const heading = clampText(rawPage?.heading, title, 120);
-    const defaultParagraphs = (defaultPage.Content || [])
+    const defaultParagraphs = (defaultPage.content || [])
       .filter((block: any) => block?.type === 'paragraph')
       .map((block: any) => String(block?.children?.[0]?.text || '').trim())
       .filter(Boolean);
     const paragraphs = normalizeParagraphs(rawPage?.paragraphs, defaultParagraphs);
 
     return {
-      Title: title,
+      title,
       slug,
-      Content: [toHeadingBlock(heading), ...paragraphs.map(toParagraphBlock)],
-      SEO: {
+      content: [toHeadingBlock(heading), ...paragraphs.map(toParagraphBlock)],
+      seo: {
         metaTitle: clampText(rawPage?.seoTitle, `${storeName} ${title}`, 70),
         metaDescription: seoDescription,
       },
@@ -219,21 +219,21 @@ function normalizeAiArticle(input: unknown, storeName: string, storeSlug: string
     ? ((input as any).article || input)
     : {};
 
-  const title = clampText(rawArticle?.title, fallback.Title, 110);
+  const title = clampText(rawArticle?.title, fallback.title, 110);
   const heading = clampText(rawArticle?.heading, title, 120);
-  const defaultParagraphs = (fallback.Content || [])
+  const defaultParagraphs = (fallback.content || [])
     .filter((block: any) => block?.type === 'paragraph')
     .map((block: any) => String(block?.children?.[0]?.text || '').trim())
     .filter(Boolean);
   const paragraphs = normalizeParagraphs(rawArticle?.paragraphs, defaultParagraphs);
 
   return {
-    Title: title,
+    title,
     slug: clampText(rawArticle?.slug, fallback.slug, 120).toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '') || fallback.slug,
-    Content: [toHeadingBlock(heading), ...paragraphs.map(toParagraphBlock)],
-    SEO: {
-      metaTitle: clampText(rawArticle?.seoTitle, fallback.SEO.metaTitle, 70),
-      metaDescription: clampText(rawArticle?.seoDescription, fallback.SEO.metaDescription, 160),
+    content: [toHeadingBlock(heading), ...paragraphs.map(toParagraphBlock)],
+    seo: {
+      metaTitle: clampText(rawArticle?.seoTitle, fallback.seo.metaTitle, 70),
+      metaDescription: clampText(rawArticle?.seoDescription, fallback.seo.metaDescription, 160),
     },
   };
 }

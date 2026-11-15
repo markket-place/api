@@ -112,7 +112,7 @@ function collectPopulateFields(input: unknown, parentPath = ''): string[] {
         return [];
       }
 
-      // Support qs-style formats: populate[SEO][populate][0]=socialImage
+      // Support qs-style formats: populate[seo][populate][0]=socialImage
       if (key === 'populate') {
         return collectPopulateFields(rawValue, parentPath);
       }
@@ -1307,12 +1307,12 @@ export default {
     try {
       const storesFromUsers = await strapi.documents('api::store.store').findMany({
         filters: { users: { id: user.id } },
-        populate: ['settings', 'users', 'admin_users', 'owner', 'URLS', 'seo', 'seo.socialImage'] as any,
+        populate: ['settings', 'users', 'admin_users', 'owner', 'urls', 'seo', 'seo.socialImage'] as any,
       }) as any[];
 
       const storesFromAdmins = await strapi.documents('api::store.store').findMany({
         filters: { admin_users: { id: user.id } },
-        populate: ['settings', 'users', 'admin_users', 'owner', 'URLS', 'seo', 'seo.socialImage'] as any,
+        populate: ['settings', 'users', 'admin_users', 'owner', 'urls', 'seo', 'seo.socialImage'] as any,
       }) as any[];
 
       const uniqueByDocumentId = new Map<string, any>();
@@ -1379,7 +1379,7 @@ export default {
           ...(data as any),
           owner: user.id,
         },
-        populate: ['settings', 'users', 'admin_users', 'owner', 'URLS', 'seo', 'seo.socialImage'],
+        populate: ['settings', 'users', 'admin_users', 'owner', 'urls', 'seo', 'seo.socialImage'],
       }) as any;
 
       const updated = await storeDocuments.update({
@@ -1391,7 +1391,7 @@ export default {
             connect: [user.id],
           },
         },
-        populate: ['settings', 'users', 'admin_users', 'owner', 'URLS', 'seo', 'seo.socialImage'],
+        populate: ['settings', 'users', 'admin_users', 'owner', 'urls', 'seo', 'seo.socialImage'],
       }) as any;
 
       const existingOwnerMembership = await membershipDocuments.findMany({

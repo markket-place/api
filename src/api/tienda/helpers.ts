@@ -477,7 +477,7 @@ export function sanitizePayloadForUpdate(data: any, config: ContentTypeConfig): 
     }
   }
 
-  // Nested media fields (dot-path, e.g. 'SEO.socialImage') — strip to scalar id/documentId.
+  // Nested media fields (dot-path, e.g. 'seo.socialImage') — strip to scalar id/documentId.
   // Without this, a GET-then-PUT cycle sends back the full populated media object inside
   // the component, which Strapi v5 cannot interpret and silently clears the media.
   for (const dotPath of config.nestedMediaFields || []) {

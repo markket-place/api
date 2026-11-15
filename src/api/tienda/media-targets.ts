@@ -23,27 +23,28 @@ export const MEDIA_TARGETS: Record<string, MediaTargetConfig> = {
       cover: { mode: 'single', allowedTypes: ['images'] },
       slides: { mode: 'multiple', allowedTypes: ['images'] },
       favicon: { mode: 'single', allowedTypes: ['images'] },
-      'SEO.socialImage': { mode: 'single', allowedTypes: ['images',] },
+      'seo.socialImage': { mode: 'single', allowedTypes: ['images',] },
     },
   },
   article: {
     uid: 'api::article.article',
     fields: {
       cover: { mode: 'single', allowedTypes: ['images'] },
-      'SEO.socialImage': { mode: 'single', allowedTypes: ['images',] },
+      'seo.socialImage': { mode: 'single', allowedTypes: ['images',] },
     },
   },
   page: {
     uid: 'api::page.page',
     fields: {
-      'SEO.socialImage': { mode: 'single', allowedTypes: ['images',] },
+      'seo.socialImage': { mode: 'single', allowedTypes: ['images',] },
     },
   },
   album: {
     uid: 'api::album.album',
     fields: {
       cover: { mode: 'single', allowedTypes: ['images'] },
-      'SEO.socialImage': { mode: 'single', allowedTypes: ['images',] },
+      'seo.socialImage': { mode: 'single', allowedTypes: ['images',] },
+      media: { mode: 'multiple', allowedTypes: ['images', 'videos'] },
     },
   },
   track: {
@@ -57,7 +58,7 @@ export const MEDIA_TARGETS: Record<string, MediaTargetConfig> = {
     fields: {
       Thumbnail: { mode: 'single', allowedTypes: ['images'] },
       slides: { mode: 'multiple', allowedTypes: ['images'] },
-      'SEO.socialImage': { mode: 'single', allowedTypes: ['images',] },
+      'seo.socialImage': { mode: 'single', allowedTypes: ['images',] },
     },
   },
   event: {
@@ -65,7 +66,7 @@ export const MEDIA_TARGETS: Record<string, MediaTargetConfig> = {
     fields: {
       Thumbnail: { mode: 'single', allowedTypes: ['images'] },
       slides: { mode: 'multiple', allowedTypes: ['images'] },
-      'SEO.socialImage': { mode: 'single', allowedTypes: ['images'] },
+      'seo.socialImage': { mode: 'single', allowedTypes: ['images'] },
     },
   },
   shortner: {
