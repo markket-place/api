@@ -625,7 +625,7 @@ export async function getVisibilityFlags(
     strapi.documents('api::page.page').findMany({
       filters: {
         store: { documentId: storeId },
-        Active: true,
+        active: true,
         slug: {
           $in: Object.values(MAGIC_SLUGS).flat()
         },
