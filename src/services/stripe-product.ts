@@ -16,12 +16,12 @@ export async function createStripeProduct(product: any): Promise<string | null> 
   }
 
   // Input validation
-  if (!product?.Name || typeof product.Name !== 'string') {
+  if (!product?.name || typeof product.name !== 'string') {
     console.error('[STRIPE_PRODUCT_SERVICE] Invalid or missing product name');
     return null;
   }
 
-  if (product.Name.length > 250) {
+  if (product.name.length > 250) {
     console.error('[STRIPE_PRODUCT_SERVICE] Product name too long (max 250 characters)');
     return null;
   }
@@ -29,12 +29,12 @@ export async function createStripeProduct(product: any): Promise<string | null> 
   console.log('[STRIPE_PRODUCT_SERVICE] Creating Stripe product');
 
   // Determine if this is a digital product
-  const isDigitalProduct = product.Name.toLowerCase().includes('digital');
+  const isDigitalProduct = product.name.toLowerCase().includes('digital');
   console.log(`[STRIPE_PRODUCT_SERVICE] Product type detected: ${isDigitalProduct ? 'Digital' : 'Physical'} (based on name: "${product.Name}")`);
 
   const productData: StripeProductCreateParams = {
-    name: product.Name,
-    description: product.Description ? stripsMarkdown(product.Description) : undefined,
+    name: product.name,
+    description: product.description ? stripsMarkdown(product.description) : undefined,
     active: product.active !== false,
     metadata: {
       strapiId: product.documentId || product.id || '',
@@ -57,12 +57,12 @@ export async function createStripeProduct(product: any): Promise<string | null> 
     productData.shippable = true;
 
     // Set package dimensions if available, otherwise use defaults
-    if (product.Weight || product.Dimensions) {
+    if (product.weight || product.dimensions) {
       productData.package_dimensions = {
-        height: product.Dimensions?.height || 2, // inches
-        length: product.Dimensions?.length || 8,
-        width: product.Dimensions?.width || 6,
-        weight: product.Weight || 4, // ounces
+        height: product.dimensions?.height || 2, // inches
+        length: product.dimensions?.length || 8,
+        width: product.dimensions?.width || 6,
+        weight: product.weight || 4, // ounces
       };
     } else {
       // Default package dimensions for physical goods
@@ -81,8 +81,8 @@ export async function createStripeProduct(product: any): Promise<string | null> 
   }
 
   // Add images if available
-  if (product.Thumbnail?.url) {
-    productData.images = [getFullImageUrl(product.Thumbnail.url)];
+  if (product.thumbnail?.url) {
+    productData.images = [getFullImageUrl(product.thumbnail.url)];
   } else if (product.slides && product.slides.length > 0) {
     productData.images = product.slides
       .filter((slide: any) => slide.url)
@@ -110,13 +110,13 @@ export async function createStripeProduct(product: any): Promise<string | null> 
  */
 export async function updateStripeProductMetadata(product: any): Promise<void> {
   const stripeClient = getStripeClient();
-  if (!stripeClient || !product.SKU) {
+  if (!stripeClient || !product.sku) {
     return;
   }
 
   try {
     console.log('[STRIPE_PRODUCT_SERVICE] Retrieving existing Stripe product for comparison...');
-    const existingProduct = await stripeClient.products.retrieve(product.SKU);
+    const existingProduct = await stripeClient.products.retrieve(product.sku);
 
     const updateData: StripeProductUpdateParams = {};
     let needsUpdate = false;
@@ -125,6 +125,7 @@ export async function updateStripeProductMetadata(product: any): Promise<void> {
     if (product.Name && product.Name !== existingProduct.name) {
       updateData.name = product.Name;
       needsUpdate = true;
+
       console.log('[STRIPE_PRODUCT_SERVICE] Product name changed:', {
         old: existingProduct.name,
         new: product.Name
@@ -141,8 +142,8 @@ export async function updateStripeProductMetadata(product: any): Promise<void> {
     }
 
     const newImages: string[] = [];
-    if (product.Thumbnail?.url) {
-      newImages.push(getFullImageUrl(product.Thumbnail.url));
+    if (product.thumbnail?.url) {
+      newImages.push(getFullImageUrl(product.thumbnail.url));
     } else if (product.slides && product.slides.length > 0) {
       const slideImages = product.slides
         .filter((slide: any) => slide.url)
@@ -175,7 +176,7 @@ export async function updateStripeProductMetadata(product: any): Promise<void> {
 
     if (needsUpdate) {
       console.log('[STRIPE_PRODUCT_SERVICE] Updating Stripe product with new metadata...');
-      const updatedProduct = await stripeClient.products.update(product.SKU, updateData);
+      const updatedProduct = await stripeClient.products.update(product.sku, updateData);
       console.log('[STRIPE_PRODUCT_SERVICE] Stripe product updated successfully:', {
         id: updatedProduct.id,
         name: updatedProduct.name
