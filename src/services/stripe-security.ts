@@ -28,7 +28,7 @@ export const SECURITY_CONFIG = {
  */
 export function sanitizeForLogging(data: any, fieldName: string): any {
   if (!SECURITY_CONFIG.LOG_SENSITIVE_DATA) {
-    if (fieldName.includes('ID') || fieldName.includes('Key') || fieldName.includes('Secret')) {
+    if (fieldName.includes('id') || fieldName.includes('key') || fieldName.includes('secret')) {
       return '[REDACTED]';
     }
   }
