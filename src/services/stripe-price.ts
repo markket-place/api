@@ -21,9 +21,9 @@ export async function syncPricesWithStripe(product: any): Promise<void> {
   for (let i = 0; i < product.prices.length; i++) {
     const price = product.prices[i];
     const missingFields = [];
-    if (!price.Name || typeof price.Name !== 'string' || price.Name.trim() === '') missingFields.push('Name');
-    if (price.Price === undefined || price.Price === null || isNaN(price.Price) || Number(price.Price) <= 0) missingFields.push('Price');
-    if (!price.Currency || typeof price.Currency !== 'string' || price.Currency.trim() === '') missingFields.push('Currency');
+    if (!price.name || typeof price.name !== 'string' || price.name.trim() === '') missingFields.push('name');
+    if (price.price === undefined || price.price === null || isNaN(price.price) || Number(price.price) <= 0) missingFields.push('price');
+    if (!price.currency || typeof price.currency !== 'string' || price.currency.trim() === '') missingFields.push('currency');
 
     if (missingFields.length > 0) {
       console.warn(`[STRIPE_PRICE_SERVICE] Skipping price ${i + 1}: missing or invalid fields [${missingFields.join(', ')}]`, price);
@@ -32,10 +32,10 @@ export async function syncPricesWithStripe(product: any): Promise<void> {
     }
 
     console.log(`[STRIPE_PRICE_SERVICE] Processing price ${i + 1}:`, {
-      Name: price.Name,
-      Price: price.Price,
+      name: price.name,
+      price: price.price,
       stripe_id: price.stripe_id,
-      Currency: price.Currency
+      currency: price.currency
     });
 
     // Safety check: don't process if this looks like incomplete data

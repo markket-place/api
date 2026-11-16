@@ -140,8 +140,8 @@ export default {
     if (q) {
       filters.$or = [
         { uuid: { $containsi: q } },
-        { STRIPE_PAYMENT_ID: { $containsi: q } },
-        { Shipping_Address: { email: { $containsi: q } } },
+        { stripe_payment_id: { $containsi: q } },
+        { shipping_address: { email: { $containsi: q } } },
       ];
     }
 
@@ -359,14 +359,14 @@ export default {
     const byEmail = new Map<string, any>();
 
     for (const order of orders || []) {
-      const email = String(order?.Shipping_Address?.email || '').trim().toLowerCase();
+      const email = String(order?.shipping_address?.email || '').trim().toLowerCase();
       if (!email) {
         continue;
       }
 
       const prev = byEmail.get(email) || emptyRecord(email);
-      if (!prev.name && order?.Shipping_Address?.name) {
-        prev.name = order.Shipping_Address.name;
+      if (!prev.name && order?.shipping_address?.name) {
+        prev.name = order.shipping_address.name;
       }
 
       prev.ordersCount += 1;

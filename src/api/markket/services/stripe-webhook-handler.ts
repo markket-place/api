@@ -82,12 +82,12 @@ function buildOrderData(
 ): any {
   return {
     data: {
-      STRIPE_PAYMENT_ID: session.id,
-      Amount: session.amount_total ? session.amount_total / 100 : 0,
-      Currency: session.currency?.toUpperCase() || 'USD',
-      Status: Status || 'paid',
+      stripe_payment_id: session.id,
+      amount: session.amount_total ? session.amount_total / 100 : 0,
+      currency: session.currency?.toUpperCase() || 'USD',
+      status: Status || 'paid',
       store: session.metadata?.store_id || null,
-      Shipping_Address: {
+      shipping_Address: {
         name: sessionData.shipping?.name || session.customer_details?.name,
         email: sessionData.buyerEmail,
         street: sessionData.shipping?.address?.line1 || sessionData.shipping?.line1,
@@ -97,21 +97,21 @@ function buildOrderData(
         zipcode: sessionData.shipping?.address?.postal_code || sessionData.shipping?.postal_code,
         country: sessionData.shipping?.address?.country || sessionData.shipping?.country,
       },
-      Payment_attempts: [{
-        Timestampt: new Date(),
+      payment_attempts: [{
+        timestampt: new Date(),
         buyer_email: sessionData.buyerEmail,
-        Status: 'Succeeded',
+        status: 'Succeeded',
         reason: '',
         session_id: session.id,
         amount: session.amount_total ? session.amount_total / 100 : 0,
         currency: session.currency?.toUpperCase() || 'USD'
       }],
-      Details: session.line_items?.data?.map((item: any) => ({
-        Price: (item.amount_total || 0) / 100,
+      details: session.line_items?.data?.map((item: any) => ({
+        price: (item.amount_total || 0) / 100,
         product: item.price?.product || null,
-        Quantity: item.quantity || 1,
-        Name: item.description || item.price?.product?.name || '',
-        Metadata: item.price?.metadata || {}
+        quantity: item.quantity || 1,
+        name: item.description || item.price?.product?.name || '',
+        metadata: item.price?.metadata || {}
       })) || [],
       extra: {
         stripe_session_id: session.id,
@@ -159,8 +159,8 @@ export async function handleCheckoutSessionCompleted(
 
   // Find existing order by payment link
   let order = sessionData.paymentLinkId ? await strapi.db.query('api::order.order').findOne({
-    where: { STRIPE_PAYMENT_ID: sessionData.paymentLinkId },
-    populate: ['store.users', 'store.settings', 'Shipping_Address', 'buyer', 'Details', 'Payment_attempts']
+    where: { stripe_payment_id: sessionData.paymentLinkId },
+    populate: ['store.users', 'store.settings', 'shipping_Address', 'buyer', 'details', 'payment_attempts']
   }) : null;
 
   if (!order) {
@@ -172,21 +172,21 @@ export async function handleCheckoutSessionCompleted(
 
     const prevAttempts = Array.isArray(order.Payment_attempts) ? order.Payment_attempts : [];
     const newAttempt = {
-      Timestampt: new Date(),
+      timestampt: new Date(),
       buyer_email: sessionData.buyerEmail,
-      Status: 'Succeeded',
+      status: 'Succeeded',
       reason: '',
       session_id: session.id,
     };
 
     order = await strapi.service('api::order.order').update(order.documentId, {
-      populate: ['Shipping_Address', 'store', 'Details'],
+      populate: ['shipping_address', 'store', 'Details'],
       data: {
-        Status: 'paid',
-        Payment_attempts: [...prevAttempts, newAttempt],
-        Shipping_Address: {
-          name: sessionData.shipping?.name || session.customer_details?.name || order.Shipping_Address?.name,
-          email: sessionData.buyerEmail || order.Shipping_Address?.email,
+        status: 'paid',
+        payment_attempts: [...prevAttempts, newAttempt],
+        shipping_Address: {
+          name: sessionData.shipping?.name || session.customer_details?.name || order.shipping_address?.name,
+          email: sessionData.buyerEmail || order.shipping_address?.email,
           street: sessionData.shipping?.address?.line1 || sessionData.shipping?.line1,
           street_2: sessionData.shipping?.address?.line2 || sessionData.shipping?.line2,
           city: sessionData.shipping?.address?.city || sessionData.shipping?.city,

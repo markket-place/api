@@ -79,7 +79,7 @@ export async function syncProductWithStripe(product: any, context: any): Promise
         ...workingProduct,
         prices: validPrices
       });
-      // After sync, ensure STRIPE_ID is updated for all prices
+      // After sync, ensure stripe_id is updated for all prices
       workingProduct.prices = workingProduct.prices.map((p: any, idx: number) => ({
         ...p,
         stripe_id: validPrices[idx]?.stripe_id || p.stripe_id || ''

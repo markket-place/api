@@ -45,7 +45,7 @@ export default factories.createCoreController('api::order.order', ({ strapi }) =
           },
         },
       },
-      populate: ['Shipping_Address', 'Details.product', 'Details.product.Thumbnail'],
+      populate: ['shipping_address', 'details.product', 'details.product.thumbnail'],
     });
 
     return orders;

@@ -131,13 +131,13 @@ const createAction = async (ctx: any) => {
         const order = await strapi.service('api::order.order').create({
           data: {
             store: body.store_id,
-            Amount: body.total,
-            Currency: 'USD',
-            Status: 'open',
-            Shipping_Address: {},
+            amount: body.total,
+            currency: 'USD',
+            status: 'open',
+            shipping_Address: {},
             uuid: generateRandomSlug(),
-            STRIPE_PAYMENT_ID: response.link.id,
-            Details: response.details,
+            stripe_payment_id: response.link.id,
+            details: response.details,
             ...recurring,
             prices_snapshot: [prices],
             extra: {
@@ -248,7 +248,7 @@ const createAction = async (ctx: any) => {
               where: {
                 $or: [
                   { extra: { stripe_payment_intent: charge.payment_intent } },
-                  { STRIPE_PAYMENT_ID: charge.payment_link }
+                  { stripe_payment_id: charge.payment_link }
                 ]
               },
               limit: 1

@@ -65,12 +65,12 @@ type notifyStoreOfPurchaseProps = {
   order: {
     id?: string,
     documentId: string,
-    Amount: number,
-    Currency: string,
+    amount: number,
+    currency: string,
     buyer?: {
       email: string,
     },
-    Shipping_Address?: {
+    shipping_address?: {
       address_line1?: string,
       address_line2?: string,
       city?: string,
@@ -78,10 +78,10 @@ type notifyStoreOfPurchaseProps = {
       postal_code?: string,
       country?: string,
     },
-    Details?: {
-      Name?: string,
-      Quantity?: number,
-      Price?: number,
+    details?: {
+      name?: string,
+      quantity?: number,
+      price?: number,
     }[],
   },
   emails: string[],
@@ -127,12 +127,12 @@ export const sendOrderNotification = async ({
   strapi: any,
   order: {
     documentId: string,
-    Amount: number,
-    Currency: string,
+    amount: number,
+    currency: string,
     buyer?: {
       email: string,
     },
-    Shipping_Address?: {
+    shipping_address?: {
       address_line1?: string,
       address_line2?: string,
       city?: string,
@@ -141,10 +141,10 @@ export const sendOrderNotification = async ({
       postal_code?: string,
       country?: string,
     },
-    Details?: Array<{
-      Name?: string,
-      Quantity?: number,
-      Price?: number,
+    details?: Array<{
+      name?: string,
+      quantity?: number,
+      price?: number,
     }>,
     store?: any
   },
@@ -169,7 +169,7 @@ export const sendOrderNotification = async ({
     return;
   }
 
-  const customer_email = order?.Shipping_Address?.email || order?.buyer?.email;
+  const customer_email = order?.shipping_address?.email || order?.buyer?.email;
 
   if (!customer_email) {
     console.warn(`notification:missing:customer_email:order:${order?.documentId}`);
