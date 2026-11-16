@@ -369,11 +369,11 @@ export async function getDashboardData(storeId: string) {
 
   console.log('[DASHBOARD]store', {
     hasStore: !!store,
-    hasLogo: !!store?.Logo,
-    hasCover: !!store?.Cover,
+    hasLogo: !!store?.logo,
+    hasCover: !!store?.cover,
     hasFavicon: !!store?.favicon,
-    hasSEO: !!store?.SEO,
-    Logo_structure: store?.Logo ? Object.keys(store.Logo) : null,
+    hasSEO: !!store?.seo,
+    Logo_structure: store?.logo ? Object.keys(store.Logo) : null,
   });
 
   const onboarding = calculateOnboardingProgress(store, contentCounts, salesSummary);
