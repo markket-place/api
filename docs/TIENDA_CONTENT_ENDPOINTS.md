@@ -132,11 +132,11 @@ Create a new content item in the store.
 
 | Type | Mutable Fields |
 |------|---|
-| article | Title, slug, Content, cover, Tags, SEO, category, description, keywords |
-| page | Title, slug, Content, Active, menuOrder, SEO, albums, description, keywords |
-| album | title, slug, description, content, SEO, cover, tracks, keywords |
-| track | title, slug, description, content, SEO, media, urls, keywords |
-| category | Name, slug, Description, SEO, Active, keywords |
+| article | Title, slug, content, cover, tags, seo, category, description, keywords |
+| page | title, slug, content, active, menuOrder, seo, albums, description, keywords |
+| album | title, slug, description, content, seo, cover, tracks, keywords |
+| track | title, slug, description, content, seo, media, urls, keywords |
+| category | name, slug, description, seo, active, keywords |
 | product | name, description, attributes, usd_price, quantity, active, Thumbnail, Slides, SEO, Tag, prices, keywords, description |
 | event | name, description, usd_price, startDate, endDate, maxCapacity, active, thumbnail, slides, seo, Tag, prices, keywords, description |
 | shortner | title, url, description, image, keywords |

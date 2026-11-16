@@ -89,7 +89,7 @@ Use `SEO.socialImage` for `og:image` / Twitter card meta tags.
 Both list and single-item endpoints accept `populate` and `filters` query params merged safely with the mandatory store scope:
 
 ```
-?populate=cover,Tags&filters[active][$eq]=true
+?populate=cover,tags&filters[active][$eq]=true
 ```
 
 Store ownership scoping is always enforced regardless of client filters.
