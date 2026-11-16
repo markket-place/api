@@ -213,7 +213,7 @@ export const getAccount = async (store_id: string): Promise<StripeAccount | null
     },
   });
 
-  const connected_account_id = store?.STRIPE_CUSTOMER_ID;
+  const connected_account_id = store?.stripe_customer_id;
   if (!connected_account_id) {
     return null;
   }
@@ -384,10 +384,10 @@ export const createPaymentLinkWithPriceIds = async ({
   let connectResult: { link: StripePaymentLink | null, feeInfo?: any } | null = null;
   let connectFailedReason: string | null = null;
 
-  if (store?.STRIPE_CUSTOMER_ID) {
+  if (store?.stripe_customer_id) {
     connectResult = await buildConnectPaymentLink({
       client,
-      connectedAccountId: store.STRIPE_CUSTOMER_ID,
+      connectedAccountId: store.stripe_customer_id,
       lineItems,
       redirectUrl,
       totalCents: Math.round((total || 0) * 100),
@@ -410,13 +410,13 @@ export const createPaymentLinkWithPriceIds = async ({
         attempted: true,
         failed: true,
         reason: connectFailedReason,
-        connectedAccountId: store.STRIPE_CUSTOMER_ID,
+        connectedAccountId: store.stripe_customer_id,
       };
     } else {
       connectStatus = {
         attempted: true,
         failed: false,
-        connectedAccountId: store.STRIPE_CUSTOMER_ID,
+        connectedAccountId: store.stripe_customer_id,
       };
     }
   }

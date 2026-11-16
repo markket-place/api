@@ -35,7 +35,7 @@ function sanitizeBuyerOrder(order: any): any {
     extensions,
     extra,
     Payment_attempts,
-    STRIPE_PAYMENT_ID,
+    stripe_payment_id,
     ...rest
   } = order;
 
@@ -75,7 +75,7 @@ export default {
         event: event
           ? {
             documentId: event.documentId,
-            Name: event.Name || null,
+            name: event.Name || null,
             slug: event.slug || null,
             startDate: event.startDate || null,
             endDate: event.endDate || null,
@@ -183,7 +183,7 @@ export default {
     const q = String(ctx.query?.q || '').trim();
 
     const filters: any = {
-      Shipping_Address: {
+      shipping_address: {
         email: {
           $eqi: email,
         },
@@ -201,14 +201,14 @@ export default {
     if (q) {
       filters.$or = [
         { uuid: { $containsi: q } },
-        { Currency: { $containsi: q } },
+        { currency: { $containsi: q } },
       ];
     }
 
     const [items, total] = await Promise.all([
       strapi.documents('api::order.order').findMany({
         filters,
-        populate: ['store', 'Shipping_Address', 'Details.product', 'Details.product.Thumbnail', 'shipments'],
+        populate: ['store', 'shipping_address', 'details.product', 'details.product.thumbnail', 'shipments'],
         sort: ['createdAt:desc'],
         skip,
         limit,
@@ -245,13 +245,13 @@ export default {
     const items = await strapi.documents('api::order.order').findMany({
       filters: {
         documentId: { $eq: documentId },
-        Shipping_Address: {
+        shipping_Address: {
           email: {
             $eqi: email,
           },
         },
       },
-      populate: ['store', 'Shipping_Address', 'Details.product', 'Details.product.Thumbnail', 'shipments'],
+      populate: ['store', 'shipping_address', 'details.product', 'details.product.thumbnail', 'shipments'],
       limit: 1,
     }) as any[];
 
@@ -284,7 +284,7 @@ export default {
     const items = await strapi.documents('api::order.order').findMany({
       filters: {
         documentId: { $eq: documentId },
-        Shipping_Address: {
+        shipping_address: {
           email: {
             $eqi: email,
           },

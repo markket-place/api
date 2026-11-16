@@ -213,8 +213,8 @@ export async function getRecentOrders(storeId: string, limit: number = 10): Prom
 
   return orders.map(order => ({
     id: order.documentId,
-    amount: order.Amount,
-    status: order.Status,
+    amount: order.amount,
+    status: order.status,
     created_at: order.createdAt,
   }));
 }
@@ -423,7 +423,7 @@ export async function getStripeStatus(storeId: string) {
     documentId: storeId
   });
 
-  if (!store?.STRIPE_CUSTOMER_ID) {
+  if (!store?.stripe_customer_id) {
     return {
       connected: false,
       status: 'not_connected',
@@ -474,14 +474,14 @@ export async function getRecentActivity(storeId: string, limit: number = 10) {
     ...recentArticles.map(a => ({
       type: 'article',
       id: a.documentId,
-      title: a.Title || 'Untitled',
+      title: a.title || 'Untitled',
       timestamp: a.createdAt,
     })),
     ...recentOrders.map(o => ({
       type: 'order',
       id: o.documentId,
-      amount: o.Amount,
-      status: o.Status,
+      amount: o.amount,
+      status: o.status,
       timestamp: o.createdAt,
     })),
   ];

@@ -162,10 +162,10 @@ async function persistStripeAccountReference(store: any, accountId: string): Pro
     return;
   }
 
-  if (store?.STRIPE_CUSTOMER_ID !== accountId) {
+  if (store?.stripe_customer_id !== accountId) {
     await (strapi.documents as any)('api::store.store').update({
       documentId: store.documentId,
-      data: { STRIPE_CUSTOMER_ID: accountId },
+      data: { stripe_customer_id: accountId },
     });
   }
 
@@ -204,8 +204,8 @@ function classifyStripeStatus(payload: {
 function getStoredStripeConnectStatus(store: any): StripeConnectStatusPayload {
   const meta = store?.settings?.meta || {};
 
-  const accountId = isNonEmptyString(store?.STRIPE_CUSTOMER_ID)
-    ? store.STRIPE_CUSTOMER_ID
+  const accountId = isNonEmptyString(store?.stripe_customer_id)
+    ? store.stripe_customer_id
     : isNonEmptyString(meta?.stripe_connect_account_id)
       ? meta.stripe_connect_account_id
       : null;
@@ -256,9 +256,9 @@ async function ensureConnectedAccount(input: {
 }): Promise<{ accountId: string; created: boolean }> {
   const { store, stripe } = input;
 
-  if (isNonEmptyString(store?.STRIPE_CUSTOMER_ID)) {
+  if (isNonEmptyString(store?.stripe_customer_id)) {
     return {
-      accountId: store.STRIPE_CUSTOMER_ID,
+      accountId: store.stripe_customer_id,
       created: false,
     };
   }
@@ -312,8 +312,8 @@ export async function syncStripeConnectStatus(input: {
     };
   }
 
-  const accountId = isNonEmptyString(store.STRIPE_CUSTOMER_ID)
-    ? store.STRIPE_CUSTOMER_ID
+  const accountId = isNonEmptyString(store.stripe_customer_id)
+    ? store.stripe_customer_id
     : null;
 
   if (!accountId) {
@@ -483,7 +483,7 @@ export async function createStripeConnectDashboardLink(input: {
     };
   }
 
-  if (!isNonEmptyString(store.STRIPE_CUSTOMER_ID)) {
+  if (!isNonEmptyString(store.stripe_customer_id)) {
     return {
       ok: false,
       action: 'stripe.connect.dashboard_link.create',
@@ -506,13 +506,13 @@ export async function createStripeConnectDashboardLink(input: {
   const redirectUrl = toAbsoluteUrl(input.returnUrl || '') || defaults.dashboardUrl;
 
   try {
-    const loginLink = await stripe.accounts.createLoginLink(store.STRIPE_CUSTOMER_ID);
+    const loginLink = await stripe.accounts.createLoginLink(store.stripe_customer_id);
 
     return {
       ok: true,
       action: 'stripe.connect.dashboard_link.create',
       data: {
-        account_id: store.STRIPE_CUSTOMER_ID,
+        account_id: store.stripe_customer_id,
         url: loginLink.url,
         created: Date.now(),
         redirect_url: redirectUrl,

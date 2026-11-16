@@ -282,7 +282,7 @@ export async function ensureOrderInboxThreadRecord(params: {
   const storeDocumentId = String(store?.documentId || '').trim();
   const routingKey = String(store?.slug || '').trim() || null;
   const customerEmail = normalizeEmailAddress(
-    order?.Shipping_Address?.email
+    order?.shipping_address?.email
     || order?.extra?.stripe_customer_details?.email
     || order?.extra?.stripe_customer?.email
     || null,

@@ -81,7 +81,7 @@ export default factories.createCoreController('api::event.event', ({ strapi }) =
         ctx,
         action: 'update',
         contentTypeUid: 'api::event.event',
-        stripeProductField: 'STRIPE_PRODUCT_ID',
+        stripeProductField: 'stripe_product_id',
       });
       ctx.body = {
         success: true,

@@ -554,11 +554,11 @@ export const EventReminderEmailHtml = ({ event, store, rsvp }: { event: any; sto
  */
 export const OrderStoreNotificationEmailHTML = (order: {
   documentId: string,
-  Amount: number,
-  Currency: string,
+  amount: number,
+  currency: string,
   buyer?: { email: string },
-  STRIPE_PAYMENT_ID?: string,
-  Shipping_Address?: {
+  stripe_payment_id?: string,
+  shipping_Address?: {
     name?: string,
     email?: string,
     street?: string,
@@ -571,15 +571,15 @@ export const OrderStoreNotificationEmailHTML = (order: {
   extra?: {
     stripe_session_id?: string,
   },
-  Details?: Array<{
-    Name?: string,
-    Quantity?: number
+  details?: Array<{
+    name?: string,
+    quantity?: number
   }>
 }, store: { title: string, documentId: string, slug: string }) => {
   console.log('notification:order:store', { order: order?.documentId });
   const theme = resolveTheme(store as Store);
 
-  const formatAddress = (addr?: typeof order.Shipping_Address) => {
+  const formatAddress = (addr?: typeof order.shipping_Address) => {
     if (!addr) return 'No shipping address provided';
     return [
       addr.name,
@@ -590,7 +590,7 @@ export const OrderStoreNotificationEmailHTML = (order: {
     ].filter(Boolean).join('\n');
   };
 
-  const customer_email = order?.buyer?.email || order?.Shipping_Address?.email;
+  const customer_email = order?.buyer?.email || order?.shipping_Address?.email;
   const sessionId = order?.extra?.stripe_session_id;
   const receiptUrl = `https://markket.place/store/${store?.slug}/receipt?session_id=${sessionId || ''}`;
   const dashboardUrl = `https://markket.place/tienda/${store.slug}/crm?order_id=${order?.documentId}#crm-orders`;
@@ -598,22 +598,22 @@ export const OrderStoreNotificationEmailHTML = (order: {
   const content = `
     <p style="margin:0 0 14px 0;">A new order just landed in <strong>${escapeHtml(store?.title || 'markket')}</strong>.</p>
     ${renderInfoPanel('Order snapshot', `
-      <p style="margin:0 0 8px 0;"><strong>Amount:</strong> ${'$'}${escapeHtml(order?.Amount)} ${escapeHtml(order?.Currency || '')}</p>
+      <p style="margin:0 0 8px 0;"><strong>Amount:</strong> ${'$'}${escapeHtml(order?.amount)} ${escapeHtml(order?.currency || '')}</p>
       <p style="margin:0 0 8px 0;"><strong>Markket Order ID:</strong> ${escapeHtml(order?.documentId)}</p>
       ${customer_email ? `<p><strong>Email:</strong> ${customer_email}</p>` : ''}
 
-      ${order?.Details && order.Details.length > 0 ? `
+      ${order?.details && order.details.length > 0 ? `
         <p style="margin:14px 0 6px 0;"><strong>Items ordered:</strong></p>
         <ul style="margin:0;padding-left:18px;">
-          ${order.Details.map(item => `
-            <li>${item.Name || 'Unnamed item'}${item.Quantity ? ` × ${item.Quantity}` : ''}</li>
+          ${order.details.map(item => `
+            <li>${item.name || 'Unnamed item'}${item.quantity ? ` × ${item.quantity}` : ''}</li>
           `).join('')}
         </ul>
       ` : ''}
 
-      ${order?.Shipping_Address ? `
+      ${order?.shipping_Address ? `
         <p style="margin:14px 0 6px 0;"><strong>Shipping address:</strong></p>
-        <pre style="margin:0;white-space:pre-wrap;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6;">${escapeHtml(formatAddress(order.Shipping_Address))}</pre>
+        <pre style="margin:0;white-space:pre-wrap;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6;">${escapeHtml(formatAddress(order.shipping_Address))}</pre>
       ` : ''}
     `, theme)}
     ${renderButton('View receipt', receiptUrl, theme)}

@@ -67,7 +67,7 @@ interface ConnectFeeConfig {
  *
  * @typedef {Object} StoreConnectData
  * @property {string} documentId - Unique store identifier
- * @property {string} [STRIPE_CUSTOMER_ID] - Connected account ID
+ * @property {string} [stripe_customer_id] - Connected account ID
  * @property {string} [slug] - URL-friendly identifier
  * @property {Object} [settings] - Store configuration with meta
  * @property {Object} [settings.meta] - Store metadata
@@ -75,7 +75,7 @@ interface ConnectFeeConfig {
  */
 export interface StoreConnectData {
   documentId: string;
-  STRIPE_CUSTOMER_ID?: string;
+  stripe_customer_id?: string;
   slug?: string;
   settings?: {
     meta?: {
