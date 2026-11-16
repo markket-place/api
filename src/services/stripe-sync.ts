@@ -20,12 +20,12 @@ export async function syncProductWithStripe(product: any, context: any): Promise
   const syncContext: SyncContext = context || {};
   const contentTypeUid: 'api::product.product' | 'api::event.event' =
     syncContext.contentTypeUid || 'api::product.product';
-  const stripeProductField = syncContext.stripeProductField || 'SKU';
+  const stripeProductField = syncContext.stripeProductField || 'sku';
 
   // Work with a normalized shape so downstream services can continue using `SKU`.
   const workingProduct = {
     ...product,
-    SKU: product?.[stripeProductField],
+    sku: product?.[stripeProductField],
   };
 
   // Validate input data
@@ -36,7 +36,7 @@ export async function syncProductWithStripe(product: any, context: any): Promise
   }
 
   // Sanitize product name for logging
-  const sanitizedName = sanitizeForLogging(workingProduct.Name, 'Name');
+  const sanitizedName = sanitizeForLogging(workingProduct.name, 'name');
   console.log(`[STRIPE_SYNC_SERVICE] Starting ${syncContext.action || 'sync'} operation for product: ${sanitizedName}`);
 
   if (!isStripeConfigured()) {
@@ -45,13 +45,13 @@ export async function syncProductWithStripe(product: any, context: any): Promise
   }
 
   // Store original values to detect what's new
-  const originalSKU = workingProduct.SKU;
+  const originalSKU = workingProduct.sku;
 
   // Step 1: Handle Stripe Product creation
-  if (!workingProduct.SKU && workingProduct.Name) {
+  if (!workingProduct.sku && workingProduct.name) {
     const stripeProductId = await createStripeProduct(workingProduct);
     if (stripeProductId) {
-      workingProduct.SKU = stripeProductId;
+      workingProduct.sku = stripeProductId;
       product[stripeProductField] = stripeProductId;
     } else {
       console.error('[STRIPE_SYNC_SERVICE] Failed to create Stripe product, skipping price sync');
@@ -60,7 +60,7 @@ export async function syncProductWithStripe(product: any, context: any): Promise
   }
 
   // Step 1.5: Update existing Stripe Product if metadata changed
-  if (workingProduct.SKU && syncContext.action === 'update') {
+  if (workingProduct.sku && syncContext.action === 'update') {
     // Only update if we're sure this isn't a partial read
     if (workingProduct.Name) { // Name is required, so if it's missing this might be partial data
       console.log('[STRIPE_SYNC_SERVICE] Checking if Stripe product needs updating...');
@@ -140,6 +140,7 @@ export async function syncProductWithStripe(product: any, context: any): Promise
         if (hasNewSKU) {
           console.log(`[STRIPE_SYNC_SERVICE] - Set ${stripeProductField} field to: [NEW_STRIPE_PRODUCT_ID]`);
         }
+
         if (hasNewPriceIds) {
           const priceCount = workingProduct.prices.filter((p: any) => p.stripe_id).length;
           console.log('[STRIPE_SYNC_SERVICE] - Update prices with new stripe_id (', priceCount, 'prices)');
