@@ -9,6 +9,7 @@ type StripePriceCreateParams = Parameters<StripeClient['prices']['create']>[0];
  */
 export async function syncPricesWithStripe(product: any): Promise<void> {
   const stripeClient = getStripeClient();
+
   if (!stripeClient || !product.sku || !Array.isArray(product.prices)) {
     return;
   }
@@ -83,13 +84,13 @@ export async function syncPricesWithStripe(product: any): Promise<void> {
 
     if (needsNewPrice) {
       // Determine product type for tax configuration
-      const isDigitalProduct = product.Name.toLowerCase().includes('digital');
+      const isDigitalProduct = (product.name || '').toLowerCase().includes('digital');
 
       const priceData: StripePriceCreateParams = {
-        unit_amount: Math.round(Number(price.Price) * 100),
-        currency: (price.Currency || 'usd').toLowerCase(),
+        unit_amount: Math.round(Number(price.price) * 100),
+        currency: (price.currency || 'usd').toLowerCase(),
         product: product.sku,
-        nickname: price.Name || `${product.Name} - Price ${i + 1}`,
+        nickname: price.name || `${product.name} - Price ${i + 1}`,
         ...(price.billing_type === 'recurring' && {
           recurring: {
             interval: price.billing_interval,
@@ -99,7 +100,7 @@ export async function syncPricesWithStripe(product: any): Promise<void> {
         metadata: {
           strapiProductId: product.documentId || product.id || '',
           priceIndex: i.toString(),
-          description: price.Description || '',
+          description: price.description || '',
           lastSyncedAt: new Date().toISOString(),
           replacedPriceId: oldPriceId || '',
           productType: isDigitalProduct ? 'digital' : 'physical',

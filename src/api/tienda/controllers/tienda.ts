@@ -2560,7 +2560,7 @@ export default {
       const eventConfig = resolveContentType('event');
       const event = await (strapi.documents as any)(eventConfig.uid).findOne({
         documentId: eventId,
-        populate: ['stores', 'Thumbnail'],
+        populate: ['stores', 'thumbnail'],
       });
 
       if (!event) {
