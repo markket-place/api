@@ -1,7 +1,7 @@
 {
   "name": "markket-api",
   "private": true,
-  "version": "0.9.21",
+  "version": "0.9.22",
   "description": "Markkët API, powered by strapi:postgres",
   "scripts": {
     "dev": "yarn strapi develop",

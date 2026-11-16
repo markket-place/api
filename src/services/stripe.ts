@@ -11,7 +11,7 @@ const instances = {
   stripeTest: null,
 };
 
-export const init = () => {
+export const init = (): StripeClient => {
   console.log('[STRIPE_SERVICE] Loading clients - STRIPE_SECRET_KEY:', !!STRIPE_SECRET_KEY);
   console.log('[STRIPE_SERVICE] Loading clients - STRIPE_SECRET_TEST_KEY:', !!STRIPE_SECRET_TEST_KEY);
 
@@ -20,6 +20,8 @@ export const init = () => {
 
   console.log('[STRIPE_SERVICE] Stripe clients initialized - stripe:',
     !!instances.stripe, 'stripeTest:', !!instances.stripeTest);
+
+  return instances.stripe || instances.stripeTest;
 };
 
 
@@ -32,7 +34,7 @@ export function getStripeClient(useTestMode: boolean = false): StripeClient | nu
   const shouldUseTest = useTestMode || defaultTestMode;
 
   if (!instances.stripe && !instances.stripeTest) {
-    init();
+    return init();
   }
 
   if (shouldUseTest && instances.stripeTest) {
@@ -51,8 +53,12 @@ export function getStripeClient(useTestMode: boolean = false): StripeClient | nu
  * Check if Stripe is configured
  */
 export function isStripeConfigured(): boolean {
+  if (!instances.stripe || !instances.stripeTest) {
+    init();
+  }
+
   return !!(instances.stripe || instances.stripeTest);
-}
+};
 
 /**
  * Convert relative image URLs to full URLs
