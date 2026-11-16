@@ -56,7 +56,7 @@ export const MEDIA_TARGETS: Record<string, MediaTargetConfig> = {
   product: {
     uid: 'api::product.product',
     fields: {
-      Thumbnail: { mode: 'single', allowedTypes: ['images'] },
+      thumbnail: { mode: 'single', allowedTypes: ['images'] },
       slides: { mode: 'multiple', allowedTypes: ['images'] },
       'seo.socialImage': { mode: 'single', allowedTypes: ['images',] },
     },
@@ -64,7 +64,7 @@ export const MEDIA_TARGETS: Record<string, MediaTargetConfig> = {
   event: {
     uid: 'api::event.event',
     fields: {
-      Thumbnail: { mode: 'single', allowedTypes: ['images'] },
+      thumbnail: { mode: 'single', allowedTypes: ['images'] },
       slides: { mode: 'multiple', allowedTypes: ['images'] },
       'seo.socialImage': { mode: 'single', allowedTypes: ['images'] },
     },
