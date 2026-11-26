@@ -26,7 +26,13 @@
 - [ ] api: endpoint to view inbox, in order details screen
 
 ### v0.9.25
-- [x] new Content Type Arbitrary JSON (widgets)
+
+[PR#189](https://github.com/markket-place/api/pull/189)
+
+- [x] api: new Content Type Arbitrary JSON (widgets)
+- [x] api: new Content Type Fulfillment (displayed to buyers after purchase)
+- [x] h4ck3r: latest strapi version 5.64.0
+
 
 ### v0.9.9
 - [x] media attribute in albums for collections

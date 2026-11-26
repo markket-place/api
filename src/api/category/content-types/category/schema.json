@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -16,6 +16,12 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::article.article",
+      "mappedBy": "category"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product.product",
       "mappedBy": "category"
     },
     "store": {

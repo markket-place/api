@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "fulfillments",
+  "info": {
+    "singularName": "fulfillment",
+    "pluralName": "fulfillments",
+    "displayName": "Fulfillment",
+    "description": "Post-purchase files, links, text, and keys unlocked after payment"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "kind": {
+      "type": "enumeration",
+      "enum": [
+        "file",
+        "url",
+        "text",
+        "license_key",
+        "mixed"
+      ],
+      "default": "mixed"
+    },
+    "files": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "url": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "payload": {
+      "type": "json"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product.product"
+    },
+    "stores": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::store.store"
+    }
+  }
+}

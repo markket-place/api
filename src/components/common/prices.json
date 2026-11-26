@@ -69,6 +69,11 @@
       "type": "integer",
       "default": 0
     },
+    "fulfillments": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::fulfillment.fulfillment"
+    },
     "ships_to": {
       "type": "json",
       "default": []
