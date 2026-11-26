@@ -2,7 +2,6 @@
 
 ## Q4 2026
 - [ ] tienda: changing slug affects links and emails, what do? (warn? backfill? redirect)
-- [ ] tienda: Digital Ocean - AI endpoints suggest content
 - [ ] config: clean up general config objects, urls, colors
 - [ ] AI: open router decides which action is needed { key: action, } for api to proceed
 - [ ] api: stripe, restrict redirect domains
@@ -14,10 +13,20 @@
 - [ ] tienda: notify of shipment tracking change
 - [ ] api: notify buyer of order change
 - [ ] api: process inbout markket.place
-- [x] storefront: Order,Purchase sends an email to slug@markket.place
+- [ ] storefront: Order,Purchase sends an email to slug@markket.place
 - [ ] api: forward email to store owner / notify them, so they could reply directly from their inbox - iphone when ready
 - [ ] api: receive form data and send an email to store owner
 - [ ] api: review role names
+- [ ] api: prodigy webhooks
+- [ ] api: prodigy create order via API
+
+- [ ] new product attribute for digital download, or furhter info
+- [ ] api: endpoint to view order details, product downloads
+- [ ] api: endpoint to inbox store, in order details screen
+- [ ] api: endpoint to view inbox, in order details screen
+
+### v0.9.25
+- [x] new Content Type Arbitrary JSON (widgets)
 
 ### v0.9.9
 - [x] media attribute in albums for collections
