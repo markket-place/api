@@ -68,7 +68,8 @@
       "type": "relation",
       "relation": "manyToOne",
       "required": true,
-      "target": "api::event.event"
+      "target": "api::event.event",
+      "inversedBy": "rsvps"
     },
     "store": {
       "type": "relation",

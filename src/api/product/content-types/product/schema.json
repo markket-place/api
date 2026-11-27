@@ -35,6 +35,12 @@
       "default": 0,
       "type": "decimal"
     },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "products"
+    },
     "description": {
       "pluginOptions": {
         "i18n": {
@@ -107,6 +113,12 @@
       "type": "component",
       "repeatable": true,
       "component": "common.prices"
+    },
+    "widgets": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::widget.widget",
+      "mappedBy": "product"
     },
     "creator": {
       "type": "relation",

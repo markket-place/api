@@ -1,0 +1,67 @@
+{
+  "kind": "collectionType",
+  "collectionName": "widgets",
+  "info": {
+    "singularName": "widget",
+    "pluralName": "widgets",
+    "displayName": "Widget",
+    "description": "Arbitrary JSON and media blocks attached to a store, page, article, or product"
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": ""
+  },
+  "attributes": {
+    "slug": {
+      "type": "string",
+      "required": true
+    },
+    "slot": {
+      "type": "string"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "items": {
+      "type": "json"
+    },
+    "media": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ]
+    },
+    "meta": {
+      "type": "json"
+    },
+    "store": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::store.store",
+      "inversedBy": "widgets"
+    },
+    "page": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::page.page",
+      "inversedBy": "widgets"
+    },
+    "article": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::article.article",
+      "inversedBy": "widgets"
+    },
+     "product": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::product.product",
+      "inversedBy": "widgets"
+    }
+  }
+}

@@ -84,6 +84,12 @@
       },
       "component": "common.seo"
     },
+    "widgets": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::widget.widget",
+      "mappedBy": "page"
+    },
     "menuOrder": {
       "pluginOptions": {
         "i18n": {
