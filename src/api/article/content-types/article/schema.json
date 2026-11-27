@@ -50,6 +50,12 @@
       "repeatable": false,
       "component": "common.seo"
     },
+    "widgets": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::widget.widget",
+      "mappedBy": "article"
+    },
     "category": {
       "type": "relation",
       "relation": "manyToOne",

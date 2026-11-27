@@ -207,6 +207,12 @@
       "target": "api::event.event",
       "mappedBy": "stores"
     },
+    "widgets": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::widget.widget",
+      "mappedBy": "store"
+    },
     "extensions": {
       "type": "component",
       "repeatable": true,

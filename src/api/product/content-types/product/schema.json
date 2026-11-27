@@ -114,6 +114,12 @@
       "repeatable": true,
       "component": "common.prices"
     },
+    "widgets": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::widget.widget",
+      "mappedBy": "product"
+    },
     "creator": {
       "type": "relation",
       "relation": "oneToOne",
